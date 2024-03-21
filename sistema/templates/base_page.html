@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>SCC - Sistema de Controle de Condomínio</title>
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='plugins/bootstrap/css/bootstrap.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/all.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='plugins/fontawesome-5.15.3/css/all.min.css') }}">
+  <link href="{{ url_for('static', filename='css/toastr/toastr.min.css') }}" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.all.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+</head>
+
+<body>
+  <header>
+    <!-- desktop -->
+    <nav id="desktop-navbar-top" class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="{{ url_for('listaProprietarios') }}">
+          <img class="logo-ead" src="/static/imagens/logo.png" alt="Logo">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarDesktop"
+          aria-controls="navbarDesktop" aria-expanded="false" aria-label="Toggle navigation">
+          <!-- <span class="navbar-toggler-icon"></span> -->
+          <img src="/static/imagens/icon-header-mobile.png" alt="">
+        </button>
+        <div class="collapse navbar-collapse" id="navbarDesktop">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <div class="menu-config">
+              <li class="nav-item">
+                <a href="" class="itens nav-link">{{current_user.nome}} <i class="fa-regular fa-angle-down"></i></a>
+                <ul class="submenu">
+                  <li><a href="{{ url_for('configMeuPerfil') }}" class=" itens nav-link">Meu perfil</a></li>
+                </ul>
+              </li>
+              <li class="nav-item">
+                <a href="{{ url_for('logout') }}" class="nav-link logout">
+                  <i class="fa-sharp fa-light fa-arrow-right-from-bracket"></i>
+                  Sair</a>
+              </li>
+            </div>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- fim desktop -->
+
+    <nav id="desktop-navbar-bottom" class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="navbarDesktop">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <div class="menu-config">
+              <li class="nav-item">
+                <a href="{{ url_for('condominios') }}" class="itens nav-link"><i class="fa-sharp fa-light fa-house"></i>
+                  Condominios</a>
+              </li>
+              <li class="nav-item">
+                <a href="" class="itens nav-link"><i class="fa-sharp fa-light fa-users"></i>
+                  Gestão de pessoas <i class="fa-regular fa-angle-down"></i></a>
+                <ul class="submenu">
+                  <div class="submenu-config"></div>
+                  <li><a href="{{ url_for('listaProprietarios') }}" class="itens nav-link">Proprietários</a></li>
+                  <li><a href="{{ url_for('listaMorador') }}" class="itens nav-link">Moradores</a></li>
+                  <!-- <li><a href="" class="nav-link">Moradores</a></li> -->
+                </ul>
+              </li>
+              <li class="nav-item">
+                <a href="{{ url_for('imoveis') }}" class="itens nav-link"><i class="fa-sharp fa-light fa-building"></i>
+                  Imóveis</a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ url_for('almoxarifado') }}" class="itens nav-link"><i
+                    class="fa-sharp fa-light fa-warehouse"></i>
+                  Almoxarifado <i class="fa-regular fa-angle-down"></i></a>
+                <ul class="submenu">
+                  <li><a href="{{ url_for('almoxarifado') }}" class="itens nav-link">Produtos</a></li>
+                </ul>
+              </li>
+              <li class="nav-item">
+                <a href="" class="itens nav-link"><i class="fa-sharp fa-light fa-sack-dollar"></i>
+                  Pagamentos <i class="fa-regular fa-angle-down"></i></a>
+                <ul class="submenu">
+                  <li><a href="{{ url_for('meusPagamentos') }}" class="itens nav-link">Meus pagamentos</a></li>
+                </ul>
+              </li>
+              <li class="nav-item">
+                <a href="" class="itens nav-link"><i class="fa-sharp fa-light fa-gear"></i> Configurações <i
+                    class="fa-regular fa-angle-down"></i></a>
+                <ul class="submenu">
+                  <li><a href="{{ url_for('configUsuarios') }}" class="itens nav-link">Usuários</a></li>
+                  <li class="nav-item">
+                    <a class="itens nav-link" href="{{ url_for('observacoes') }}">Observações</a>
+                  </li>
+                </ul>
+              </li>
+            </div>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- mobile -->
+    <nav id="mobile-navbar" class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="{{ url_for('listaProprietarios') }}">
+          <img class="logo-ead" src="/static/imagens/logo.png" alt="Logo">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMobile"
+          aria-controls="navbarMobile" aria-expanded="false" aria-label="Toggle navigation">
+          <!-- <span class="navbar-toggler-icon"></span> -->
+          <img src="/static/imagens/icon-header-mobile.png" alt="">
+        </button>
+        <div class="collapse navbar-collapse" id="navbarMobile">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a href="{{ url_for('listaProprietarios') }}" class="itens nav-link">
+                Home</a>
+            </li>
+            <li class="nav-item">
+              <a href="{{ url_for('listaProprietarios') }}" class="itens nav-link">
+                Proprietários</a>
+            </li>
+            <li class="nav-item">
+              <a href="{{ url_for('listaMorador') }}" class="itens nav-link">
+                Moradores</a>
+            </li>
+            <li class="nav-item">
+              <a href="{{ url_for('imoveis') }}" class="itens nav-link"> Imóveis</a>
+            </li>
+            <li class="nav-item">
+              <a href="{{ url_for('almoxarifado') }}" class="itens nav-link">
+                Almoxarifado</a>
+            </li>
+            <li class="nav-item">
+              <a href="{{ url_for('meusPagamentos') }}" class="itens nav-link">
+                Meus Pagamentos</a>
+            </li>
+            <li class="nav-item">
+              <a class="itens nav-link" href="{{ url_for('configMeuPerfil') }}">Meu perfil</a>
+            </li>
+            <li class="nav-item">
+              <a class="itens nav-link" href="{{ url_for('configUsuarios') }}">Usuários</a>
+            </li>
+            <li class="nav-item">
+              <a class="itens nav-link" href="{{ url_for('observacoes') }}">Observações</a>
+            </li>
+            <li class="nav-item">
+              <a href="{{ url_for('logout') }}" class="itens nav-link logout">
+                Sair</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- fim mobile -->
+  </header>
+
+  <main id="conteudo-main">
+    {% block conteudo %}
+
+    {% endblock conteudo %}
+  </main>
+  <script src="{{url_for('static', filename='plugins/bootstrap/js/bootstrap.bundle.js')}}"></script>
+  <script src="{{url_for('static', filename='plugins/jquery/jquery.min.js')}}"></script>
+  <script src="{{ url_for('static', filename='plugins/fontawesome-5.15.3/js/all.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/base_page.js') }}"></script>
+  <script src="{{url_for('static', filename='plugins/mask/jquery.mask.min.js')}}"></script>
+  <script src="{{ url_for('static', filename='plugins/toastr/toastr.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='plugins/toastr/toastr.init.js') }}"></script>
+  {% block script %}
+
+  {% endblock script %}
+</body>
+
+</html>

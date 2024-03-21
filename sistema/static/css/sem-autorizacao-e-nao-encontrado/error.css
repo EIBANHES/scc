@@ -1,0 +1,37 @@
+#pagina-nao-encontrada {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#pagina-nao-encontrada .autorizacao-container {
+    height: 275px;
+    width: 485px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+}
+
+#pagina-nao-encontrada .autorizacao-container .imagem {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#pagina-nao-encontrada .autorizacao-container .imagem img {
+    width: 100px;
+}
+
+#pagina-nao-encontrada .autorizacao-container .mensagem {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 35px;
+}
+
+#pagina-nao-encontrada .autorizacao-container .mensagem h6 {
+    color: var(--blue);
+    margin-bottom: 15px;
+    text-align: center;
+}

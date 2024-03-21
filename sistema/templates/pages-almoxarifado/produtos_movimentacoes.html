@@ -1,0 +1,149 @@
+{% if current_user.is_authenticated %}
+{% extends 'base_page.html' %}
+{% block conteudo %}
+
+<section id="area-almoxarifado" class="pt-5">
+  <div class="container">
+    <div class="breadcrumb-pagina">
+      {% set breadcrumb_items=['Home', 'Almoxarifado', 'Produtos', 'Movimentações'] %}
+      {% include 'breadcrumb.html'%}
+    </div>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+      {{ message }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+  </div>
+  </div>
+  </div>
+
+  <div class="dados-tabela pt-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <div class="tabela-info">
+            <div class="table-responsive">
+              <table cellpadding="0" cellspacing="0" class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Data e hora</th>
+                        <th scope="col">Responsável</th>
+                        <th scope="col">Tipo</th>
+                        <th scope="col">Quantidade movimentada</th>
+                        <th scope="col">Quantidade no estoque</th>
+                        <th scope="col">Valor unitário</a></th>
+                        <th scope="col">Valor total</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    {% for movimentacao in movimentacoes %}
+                    <tr class="{{ 'success' if movimentacao.tipo == 'Entrada' else 'danger' }}">
+                        <td>{{ formatar_data_brasil(movimentacao.data_alteracao) }}</td>
+                        <td>{{ movimentacao.responsavel }}</td>
+                        <td>{{ movimentacao.tipo }}</td>
+                        <td>{{ '+' if movimentacao.tipo == 'Entrada' else '-' }} {{ formatacao_valor_numerico(movimentacao.quantidade_movimentada) }}</td>
+                        <td>{{ formatacao_valor_numerico(movimentacao.quantidade_estoque) }}</td>
+                        <td>{{ formatacao_valor_numerico(movimentacao.valor_unitario) }}</td>
+                        <td>{{ formatacao_valor_numerico(movimentacao.valor_total) }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="divisor pt-5"></div>
+        <div class="col-sm-12 col-md-12 col-lg-12 mt-3">
+            <div class="box-body table-responsive">
+                <table cellpadding="0" cellspacing="0" class="table table-bordered margin-bottom-0">
+                    <tbody>
+                      <tr>
+                        <thead>
+                            <th scope="col">Resumo das movimentações</th>
+                        </thead>
+                      </tr>
+                      <tr class="success">
+                          <td scope="col">Entradas de produtos: {{ formatacao_valor_numerico(total_entrada) }} (<i>R$ {{ formatacao_valor_numerico(total_entrada * produto.valor) }}</i>)</td>
+                      </tr>
+                      <tr class="danger">
+                          <td scope="col">Saídas de produtos: {{ formatacao_valor_numerico(total_saida) }} (<i>R$ {{ formatacao_valor_numerico(total_saida * produto.valor) }}</i>)</td>
+                      </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Table mobile -->
+  <div class="dados-tabela-mobile mt-4">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <div class="tabela-info">
+            <div class="table-responsive">
+              <table cellpadding="0" cellspacing="0" class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Data e hora</th>
+                        <th scope="col">Responsável</th>
+                        <th scope="col">Tipo</th>
+                        <th scope="col">Quantidade movimentada</th>
+                        <th scope="col">Quantidade no estoque</th>
+                        <th scope="col">Valor unitário</a></th>
+                        <th scope="col">Valor total</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    {% for movimentacao in movimentacoes %}
+                    <tr class="{{ 'success' if movimentacao.tipo == 'Entrada' else 'danger' }}">
+                        <td>{{ formatar_data_brasil(movimentacao.data_alteracao) }}</td>
+                        <td>{{ movimentacao.responsavel }}</td>
+                        <td>{{ movimentacao.tipo }}</td>
+                        <td>{{ '+' if movimentacao.tipo == 'Entrada' else '-' }} {{ formatacao_valor_numerico(movimentacao.quantidade_movimentada) }}</td>
+                        <td>{{ formatacao_valor_numerico(movimentacao.quantidade_estoque) }}</td>
+                        <td>{{ formatacao_valor_numerico(movimentacao.valor_unitario) }}</td>
+                        <td>{{ formatacao_valor_numerico(movimentacao.valor_total) }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="divisor pt-5"></div>
+        <div class="col-sm-12 col-md-12 col-lg-12 mt-3">
+            <div class="box-body table-responsive">
+                <table cellpadding="0" cellspacing="0" class="table table-bordered margin-bottom-0">
+                    <tbody>
+                      <tr>
+                        <thead>
+                            <th scope="col">Resumo das movimentações</th>
+                        </thead>
+                      </tr>
+                      <tr class="success">
+                          <td scope="col">Entradas de produtos: {{ formatacao_valor_numerico(total_entrada) }} (<i>R$ {{ formatacao_valor_numerico(total_entrada * produto.valor) }}</i>)</td>
+                      </tr>
+                      <tr class="danger">
+                          <td scope="col">Saídas de produtos: {{ formatacao_valor_numerico(total_saida) }} (<i>R$ {{ formatacao_valor_numerico(total_saida * produto.valor) }}</i>)</td>
+                      </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock conteudo %}
+{% else %}
+{% include 'sem_autorizacao.html' %}
+{% endif%}

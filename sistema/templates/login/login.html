@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block conteudo %}
+
+<section id="login-page">
+  <div class="container">
+    <div class="sistema-alerta">
+      <div class="row">
+        <div class="col-12">
+          {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+          {% for category, message in messages %}
+          <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+          {% endfor %}
+          {% endif %}
+          {% endwith %}
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <div class="area-login">
+          <div class="area-login__imagem">
+            <img src="static/imagens/logo.png" alt="SCC">
+          </div>
+          <div class="area-login__form">
+            <form action="" method="post" class="needs-validation" novalidate>
+              <div class="item-form">
+                <label for="cpf_cnpj" class="form-label">CPF/CNPJ: </label>
+                <input class="form-control form-control-sm" type="text" id="cpfcnpj" name="cpf_cnpj" required>
+              </div>
+              <div class="item-form">
+                <label for="senha" class="form-label">Senha: </label>
+                <input type="password" class="form-control" id="senha" name="senha" required>
+              </div>
+              <div class="area-login__recuperar-senha">
+                <a href="">Recuperar senha</a>
+              </div>
+              <div class="area-login__acoes">
+                <div class="item-form" style="margin-bottom: 0px;">
+                  <button type="submit" class="botao-default">Login</button>
+                </div>
+                <a href="{{ url_for('cadastrarSe') }}" class="botao-transparente"
+                  style="margin-right: 0px;">Cadastre-se</a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock conteudo %}

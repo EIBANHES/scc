@@ -1,0 +1,127 @@
+{% if current_user.is_authenticated %}
+{% extends 'base_page.html' %}
+
+{% block conteudo %}
+
+<section id="criar-produto" class="pt-5">
+  <div class="container">
+    <div class="breadcrumb-pagina">
+      {% set breadcrumb_items=['Home', 'Almoxarifado', 'Produtos', 'Cadastrar produto'] %}
+      {% include 'breadcrumb.html'%}
+    </div>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+      {{ message }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    <div class="card-info mt-4 mt-sm-5 mt-lg-5">
+      <form action="{{url_for('criarProduto')}}" class="mt-3 needs-validation" method="POST" novalidate>
+        <div class="row">
+          <div class="col-12 col-sm-12 col-md-12 col-xl-3 col-lg-3">
+            <div class="item-form">
+              <label for="produtoNome" class="form-label">Nome do produto</label>
+              <input name="produto-nome" class="form-control form-control-sm" maxlength="100" type="text"
+                id="produtoNome" required>
+            </div>
+          </div>
+
+          <div class="col-12 col-sm-12 col-md-12 col-xl-3 col-lg-3">
+            <div class="item-form">
+              <label for="produtoCodigo" class="form-label">Código do produto</label>
+              <input name="produto-codigo" class="form-control form-control-sm" maxlength="11" type="text"
+                id="produtoCodigo" required>
+            </div>
+          </div>
+
+          <div class="col-12 col-sm-12 col-md-12 col-xl-3 col-lg-3">
+            <div class="item-form">
+              <label for="produtoCodigoBarras" class="form-label">Cód de barras do produto</label>
+              <input name="produto-codigo-barras" class="form-control form-control-sm" maxlength="13" type="text"
+                id="produtoCodigoBarras">
+            </div>
+          </div>
+
+          <div class="col-12 col-sm-12 col-md-12 col-xl-3 col-lg-3">
+            <div class="item-form">
+              <label for="produtoCategoria" class="form-label">Categoria do produto</label>
+              <div class="input-group">
+                <select class="form-control form-control-sm" name="produto-categoria" id="produtoCategoria" required>
+                  <option selected disabled value="">Selecione uma categoria</option>
+                  {% for categoria_produto in categorias_produtos %}
+                  {% if categoria_produto.ativo == 1 %}
+                  <option value="{{ categoria_produto.id }}">{{ categoria_produto.tipo }}</option>
+                  {% endif %}
+                  {% endfor %}
+                </select>
+                <div class="input-group-append">
+                  <button class="botao-default" type="button" data-bs-toggle="modal"
+                    data-bs-target="#modalCadastroCategoria"><i class="fa-solid fa-plus"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-sm-12 col-md-12 col-xl-3 col-lg-3">
+            <div class="item-form">
+              <label for="produtoValor" class="form-label">Valor do produto</label>
+              <input name="produto-valor" class="form-control form-control-sm" type="text" id="produtoValor" required>
+            </div>
+          </div>
+
+          <div class="col-12 col-sm-12 col-md-12 col-xl-3 col-lg-3">
+            <div class="item-form">
+              <label for="produtoEstoque" class="form-label">Quantidade no estoque</label>
+              <input name="produto-estoque" class="form-control form-control-sm" type="text" id="produtoEstoque"
+                required>
+            </div>
+          </div>
+
+          <div class="col-12 col-sm-12 col-md-12 col-xl-3 col-lg-3">
+            <div class="item-form">
+              <label for="produtoValorTotal" class="form-label">Valor estimado do produto</label>
+              <input name="produto-valor-total" class="form-control form-control-sm" type="text" id="produtoValorTotal"
+                disabled>
+            </div>
+          </div>
+
+          <div class="col-12">
+            <div class="botoes-acao mt-3">
+              <a href="javascript:history.back()" class="botao-transparente">Voltar</a>
+              <button class="botao-default" type="submit">Cadastrar</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <!-- Modal Cadastro Categoria -->
+    <div class="modal fade" id="modalCadastroCategoria" tabindex="-1" role="dialog"
+      aria-labelledby="modalCadastroCategoriaLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalCadastroCategoriaLabel">Cadastrar nova categoria</h5>
+          </div>
+          <form action="{{url_for('criarCategoriaProduto')}}" method="POST">
+            <div class="modal-body">
+              <label for="categoriaProduto">Categoria do produto</label>
+              <input name="produto-categoria" type="text" class="form-control" id="categoriaProduto">
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="botao-default">Salvar</button>
+              <button type="button" class="botao-transparente" data-bs-dismiss="modal">Fechar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock conteudo %}
+{% else %}
+{% include 'sem_autorizacao.html' %}
+{% endif%}

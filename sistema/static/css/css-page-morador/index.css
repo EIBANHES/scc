@@ -1,0 +1,9 @@
+#area-morador {
+    margin-bottom: 50px;
+}
+
+#area-morador .filtro-item .criar-morador {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

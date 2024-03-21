@@ -1,0 +1,57 @@
+.breadcrumb-pagina .breadcrumb .breadcrumb-item a {
+  color: var(--blue);
+  transition: all .5s;
+  text-decoration: none;
+}
+
+.breadcrumb-pagina .breadcrumb .breadcrumb-item a:hover {
+  color: var(--darkBlue);
+  transition: all .5s;
+  text-decoration: none;
+}
+
+/* Setando como bold o breadcrumb ativo da página */
+.breadcrumb-pagina .breadcrumb .breadcrumb-item.active {
+  font-weight: 500;
+}
+
+.breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.breadcrumb-item {
+  display: flex;
+  align-items: center;
+  font-size: 15px;
+}
+
+
+.breadcrumb-item.active {
+  font-weight: bold;
+}
+
+/* Responsividade */
+
+@media (max-width: 1440px) {}
+
+@media (max-width: 1399.98px) {}
+
+@media (max-width: 1199.98px) {}
+
+@media(max-width: 1024px) {
+  .breadcrumb-item {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 991.98px) {}
+
+@media (max-width: 767.98px) {}
+
+@media (max-width: 575.98px) {}
+
+@media(max-width: 375px) {}

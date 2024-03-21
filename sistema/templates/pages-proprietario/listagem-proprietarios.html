@@ -1,0 +1,277 @@
+{% if current_user.is_authenticated %}
+{% extends 'base_page.html' %}
+
+{% block conteudo %}
+
+<section id="topo-configuracao">
+  <div class="container">
+    <div class="filtro-busca-item">
+      <div class="row">
+        {% set rota='criarProprietario' %}
+        {% set nome_botao='Adicionar novo proprietário' %}
+        {% set placeholder='Buscar proprietário...' %}
+        {% include 'componente-filtro-cadastro.html'%}
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="filtro-pesquisa">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="botao-filtragem">
+          <button class="botao-default" data-bs-toggle="modal" data-bs-target="#filtroModal"><i
+              class="fa-solid fa-filter"></i> Filtro
+          </button>
+          <div class="modal fade" id="filtroModal" tabindex="-1" aria-labelledby="filtroModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="filtroModalLabel">Filtro de busca</h5>
+                </div>
+                <div class="modal-body">
+                  <form action="/index" method="get">
+                    <!-- Conteúdo do filtro (campos com selects) -->
+                    <div class="form-group mb-3">
+                      <label for="andar" class="form-label"><strong>Andar:</strong></label>
+                      <select name="andar" class="form-control form-control-sm" id="andar">
+                        <option value="" selected>--Todos--</option>
+                        {% for andar in andar_query %}
+                        <option value="{{ andar.id }}">{{ andar.nome }}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                    <div class="form-group mb-3">
+                      <label for="apartamento" class="form-label"><strong>Apartamento:</strong></label>
+                      <input type="text" name="apartamento" id="apartamento" class="form-control form-control-sm">
+                    </div>
+                    <div class="form-group mb-3">
+                      <label for="email" class="form-label"><strong>Email:</strong></label>
+                      <input type="text" name="email" id="email" class="form-control form-control-sm">
+                    </div>
+                    <div class="modal-footer">
+                      <button type="submit" class="botao-default">Filtrar</button>
+                      <button type="button" class="botao-transparente" data-bs-dismiss="modal">
+                        Fechar
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="listagem-proprietario">
+  <div class="dados-tabela">
+    <div class="container">
+      <div class="row">
+        {% if proprietarios %}
+        <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-lg-6">
+          <div class="botao-exportar-pdf mt-3">
+            <a href="{{ url_for('exportar_pdf_rota', entity_name=entity_name) }}" class="botao-pdf"><i
+                class="fa-solid fa-file-pdf"></i> Exportar para PDF</a>
+          </div>
+        </div>
+        <div class="col-12 pt-5">
+          <div class="tabela-info">
+            <div class="table-responsive">
+              <table class="table table-sm">
+                <thead>
+                  <tr>
+                    <th scope="col"><a
+                        href="{{ url_for('listaProprietarios', order_by='nome', order_direction=next_order_direction) }}">Nome</a>
+                      {% if order_by == None %}
+                      <i class="fa fa-sort"></i>
+                      {% endif %}
+
+                      {% if order_by == 'nome' %}
+                      <i class="fa fa-sort-{{ 'up' if order_direction == 'asc' else 'down' }}"></i>
+                      {% endif %}
+                    </th>
+                    <th scope="col">CPF</th>
+                    <th scope="col">RG</th>
+                    <th scope="col">Tipo proprietário</th>
+                    <th scope="col">Ações</th>
+                  </tr>
+                </thead>
+                {% for proprietario in proprietarios %}
+                {% if proprietario.ativo%}
+                <tbody>
+                  <tr>
+                    <td>{{ proprietario.nome }}</td>
+                    <td>{{ proprietario.cpf }}</td>
+                    <td>{{ proprietario.rg }}</td>
+                    <td><span class="badge text-bg-success">Proprietário</span>
+                    </td>
+                    <td class="acao">
+                      <a href="{{ url_for('visualizarProprietario', id=proprietario.id) }}"
+                        class="link botao-acao-tabela"><i class="fa-regular fa-eye"></i></a>
+                      <a href="{{ url_for('editarProprietario', id=proprietario.id) }}"
+                        class="link botao-acao-tabela"><i class="fa-regular fa-pen"></i></a>
+                      <!-- Button trigger modal -->
+                      <button type="button" class="botao-acao-tabela" data-bs-toggle="modal"
+                        data-bs-target="#modalExclusaoProprietario{{proprietario.id}}">
+                        <i class="fa-regular fa-xmark"></i>
+                      </button>
+                      <!-- Modal -->
+                      <div class="modal fade" id="modalExclusaoProprietario{{proprietario.id}}" tabindex="-1"
+                        aria-labelledby="modalExclusaoProprietario{{proprietario.id}}Label" aria-hidden="true">
+                        <div class="modal-dialog">
+                          <div class="modal-content topo">
+                            <div class="modal-header">
+                              <i class="fa-thin fa-square-xmark"></i>
+                            </div>
+                            <div class="modal-body">
+                              <p class="custom-label-modal-body" for="removerProprietario">
+                                Deseja remover o
+                                proprietário '{{ proprietario.nome }}' ?</p>
+                            </div>
+                            <div class="modal-footer">
+                              <form action="{{url_for('excluirProprietario', id=proprietario.id)}}" method="post">
+                                <button type="submit" class="botao-default">Sim</button>
+                              </form>
+                              <button type="button" class="botao-transparente" data-bs-dismiss="modal">Não
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+                {% endif %}
+                {% endfor %}
+              </table>
+            </div>
+          </div>
+          {% set endpoint = 'listaProprietarios' %}
+          {% include 'pagination.html' %}
+        </div>
+        {% else %}
+        <div class="mensagem-indisponivel mt-3">
+          <div class="container">
+            <div class="row">
+              <div class="col-12">
+                <span> Não há proprietários para serem exibidos.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  <div class="dados-tabela-mobile mt-4">
+    <div class="container">
+      <div class="row">
+        {% if proprietarios %}
+        <div class="col-12">
+          <div class="tabela-info">
+            <div class="accordion accordion-flush" id="accordionFlushExample">
+              {% for proprietario in proprietarios %}
+              {% if proprietario.ativo %}
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseOne{{ proprietario.id }}" aria-expanded="false"
+                    aria-controls="flush-collapseOne{{ proprietario.id }}">
+                    {{ proprietario.nome }}
+                  </button>
+                </h2>
+                <div id="flush-collapseOne{{ proprietario.id }}" class="accordion-collapse collapse"
+                  data-bs-parent="#accordionFlushExample">
+                  <div class="accordion-body">
+                    <table class="table table-sm">
+                      <thead>
+                        <tr>
+                          <th scope="col">Imovel</th>
+                          <th scope="col">Categoria</th>
+                          <th scope="col">Ações</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for proprietario_casa in proprietario.imoveis %}
+                        <tr>
+                          <td>{{ proprietario_casa.andar.nome }}, AP: {{
+                            proprietario_casa.apartamento }}
+                          </td>
+                          <td><span class="badge text-bg-success">Proprietário</span>
+                          </td>
+                          <td class="acao">
+                            <a href="{{ url_for('visualizarProprietario', id=proprietario.id) }}"
+                              class="link botao-acao-tabela"><i class="fa-regular fa-eye"></i></i></a>
+                            <a href="{{ url_for('editarProprietario', id=proprietario.id) }}"
+                              class="link botao-acao-tabela"><i class="fa-regular fa-pen"></i></a>
+                            <!-- Button trigger modal -->
+                            <button type="button" class="botao-acao-tabela" data-bs-toggle="modal"
+                              data-bs-target="#modalExclusaoProprietarioMobile{{proprietario.id}}">
+                              <i class="fa-regular fa-xmark"></i>
+                            </button>
+                            <!-- Modal -->
+                            <div class="modal fade" id="modalExclusaoProprietarioMobile{{proprietario.id}}"
+                              tabindex="-1" aria-labelledby="modalExclusaoProprietarioMobile{{proprietario.id}}Label"
+                              aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <i class="fa-thin fa-square-xmark"></i>
+                                  </div>
+                                  <div class="modal-body">
+                                    <p class="custom-label-modal-body" for="removerProprietario">Deseja remover o
+                                      proprietário '{{ proprietario.nome }}' ?</p>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <form action="{{url_for('excluirProprietario', id=proprietario.id)}}" method="post">
+                                      <button type="submit" class="botao-default">
+                                        Sim
+                                      </button>
+                                    </form>
+                                    <button type="button" class="botao-transparente" data-bs-dismiss="modal">Não
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              {% endif %}
+              {% endfor %}
+            </div>
+          </div>
+          {% set endpoint = 'listaProprietarios' %}
+          {% include 'pagination.html' %}
+        </div>
+        {% else %}
+        <div class="mensagem-indisponivel mt-3">
+          <div class="container">
+            <div class="row">
+              <div class="col-12">
+                <span> Não há proprietários para serem exibidos.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock conteudo %}
+{% block scripts %}
+
+{% endblock scripts %}
+{% else %}
+{% include 'sem_autorizacao.html' %}
+{%endif%}

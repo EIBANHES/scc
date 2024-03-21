@@ -1,0 +1,71 @@
+{% if current_user.is_authenticated %}
+
+{% extends 'base_page.html' %}
+
+{% block conteudo %}
+<section id="pagamentos" class="pt-5">
+  <div class="container">
+    <div class="breadcrumb-pagina">
+      {% set breadcrumb_items=['Home', 'Meus Pagamentos'] %}
+      {% include 'breadcrumb.html'%}
+    </div>
+    <div class="filtro-item mt-4 mt-sm-5 mt-lg-5">
+      <div class="row">
+        <div class="col-12">
+          <form action="" method="get">
+            <div class="area-busca">
+              <input class="form-control form-control-sm" type="search" name="search" id="search"
+                placeholder="Buscar...">
+              <button type="submit" class="botao-submit"><i class="fa-sharp fa-light fa-magnifying-glass"></i></button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="tabela-pagamentos" class="pt-5">
+  <div class="container">
+    <div class="dados-tabela pt-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <div class="tabela-info">
+              <div class="table-responsive">
+                <table class="table table-sm">
+                  <thead>
+                    <tr>
+                      <th scope="col">ID</th>
+                      <th scope="col">Valor</th>
+                      <th scope="col">Status</th>
+                      <th scope="col">Data de criação</th>
+                      <th scope="col">Forma de pagamento</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  <tr>
+                    <td>{{ data.tx_id }}</td>
+                    <td>R$ {{ data.valor_total }}</td>
+                    <td><span class="badge text-bg-success">{{ data.status }}</span></td>
+                    <td>{{ data.data_criacao }}</td>
+                    {% if data.tx_id %}
+                    <td>Pix</td>
+                    {% else %}
+                    <td>Boleto</td>
+                    {% endif %}
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock conteudo %}
+{% else %}
+{% include 'sem_autorizacao.html' %}
+{% endif%}

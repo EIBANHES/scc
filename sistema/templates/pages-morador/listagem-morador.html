@@ -1,0 +1,260 @@
+{% if current_user.is_authenticated %}
+
+{% extends 'base_page.html' %}
+
+{% block conteudo %}
+
+<section id="topo-configuracao">
+  <div class="container">
+    <div class="filtro-busca-item">
+      <div class="row">
+        {% set rota='criarMorador' %}
+        {% set nome_botao='Adicionar novo morador' %}
+        {% set placeholder='Buscar morador...' %}
+        {% include 'componente-filtro-cadastro.html'%}
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="filtro-pesquisa">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="botao-filtragem">
+          <button class="botao-default" data-bs-toggle="modal" data-bs-target="#filtroModal"><i
+              class="fa-solid fa-filter"></i> Filtro</button>
+          <div class="modal fade" id="filtroModal" tabindex="-1" aria-labelledby="filtroModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content topo">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="filtroModalLabel">Filtro de busca</h5>
+                </div>
+                <div class="modal-body">
+                  <form action="/gestao-moradores/listar-moradores" method="get">
+                    <div class="form-group mb-3">
+                      <label for="email" class="form-label"><strong>Email</strong></label>
+                      <input class="form-control form-control-sm" type="text" id="email" name="email">
+                    </div>
+                    <div class="modal-footer">
+                      <button type="submit" class="botao-default">Filtrar</button>
+                      <button type="button" class="botao-transparente" data-bs-dismiss="modal">Fechar</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="area-morador">
+  <div class="dados-tabela">
+    <div class="container">
+      <div class="row">
+        {% if moradores %}
+        <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-lg-6">
+          <div class="botao-exportar-pdf mt-3">
+            <a href="{{ url_for('exportar_pdf_rota', entity_name='moradores') }}" class="botao-pdf"><i
+                class="fa-solid fa-file-pdf"></i> Exportar para PDF</a>
+          </div>
+        </div>
+        <div class="col-12 pt-5">
+          <div class="tabela-info">
+            <div class="table-responsive">
+              <table class="table table-sm">
+                <thead>
+                  <tr>
+                    <th scope="col"><a
+                        href="{{ url_for('listaMorador', order_by='nome', order_direction=next_order_direction) }}">Nome</a>
+                      {% if order_by == None %}
+                      <i class="fa fa-sort"></i>
+                      {% endif %}
+
+                      {% if order_by == 'nome' %}
+                      <i class="fa fa-sort-{{ 'up' if order_direction == 'asc' else 'down' }}"></i>
+                      {% endif %}
+                    </th>
+                    <th scope="col">CPF</th>
+                    <th scope="col">RG</th>
+                    <th scope="col">Complemento</th>
+                    <th scope="col">Tipo morador</th>
+                    <th scope="col">Ações</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for morador in moradores %}
+                  {% if morador.pessoa and morador.tipo_morador and morador.pessoa.ativo and morador.ativo%}
+                  <tr>
+                    <td>{{ morador.pessoa.nome }}</td>
+                    <td>{{ morador.pessoa.cpf }}</td>
+                    <td>{{ morador.pessoa.rg }}</td>
+                    <td>
+                      {% if morador.imovel %}
+                      {{ morador.imovel.andar.nome }}, Apartamento: {{ morador.imovel.apartamento }}
+                      {% else %}
+                      Sem imóvel
+                      {% endif %}
+                    </td>
+                    <td><span class="badge text-bg-success">{{ morador.tipo_morador.tipo }}</span></td>
+                    <td class="acao">
+                      <a href="{{ url_for('visualizarMorador', id=morador.id) }}" class="link botao-acao-tabela"><i
+                          class="fa-regular fa-eye"></i></a>
+                      <a href="{{ url_for('editarMorador', id=morador.id) }}" class="link botao-acao-tabela"><i
+                          class="fa-regular fa-pen"></i></a>
+                      <!-- Button trigger modal -->
+                      <button type="button" class="botao-acao-tabela" data-bs-toggle="modal"
+                        data-bs-target="#modalExclusao{{ morador.id }}">
+                        <i class="fa-regular fa-xmark"></i>
+                      </button>
+                      <!-- Modal -->
+                      <div class="modal fade" id="modalExclusao{{ morador.id }}" tabindex="-1"
+                        aria-labelledby="modalExclusao{{ morador.id }}Label" aria-hidden="true">
+                        <div class="modal-dialog">
+                          <div class="modal-content topo">
+                            <div class="modal-header">
+                              <i class="fa-thin fa-square-xmark"></i>
+                            </div>
+                            <div class="modal-body">
+                              <label class="custom-label-modal-body" for="removerProprietario">Deseja remover o(a)
+                                morador(a)
+                                {{ morador.pessoa.nome }} ?</label>
+                            </div>
+                            <div class="modal-footer">
+                              <form action="{{ url_for('excluirMorador', id=morador.id) }}" method="post">
+                                <button type="submit" class="botao-default">Sim</button>
+                              </form>
+                              <button type="button" class="botao-transparente" data-bs-dismiss="modal">Não</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  {% endif %}
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+          {% set endpoint = 'listaMorador' %}
+          {% include 'pagination.html' %}
+        </div>
+        {% else %}
+        <div class="mensagem-indisponivel mt-3">
+          <div class="container">
+            <div class="row">
+              <div class="col-12">
+                <span> Não há moradores para serem exibidos.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  <div class="dados-tabela-mobile mt-4">
+    <div class="container">
+      <div class="row">
+        {% if moradores%}
+        <div class="col-12">
+          <div class="tabela-info">
+            <div class="accordion accordion-flush" id="accordionFlushExample">
+              {% for morador in moradores %}
+              {% if morador.pessoa and morador.tipo_morador%}
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseOne{{ morador.id }}" aria-expanded="false"
+                    aria-controls="flush-collapseOne{{ morador.id }}">
+                    {{ morador.pessoa.nome }}
+                  </button>
+                </h2>
+                <div id="flush-collapseOne{{ morador.id }}" class="accordion-collapse collapse"
+                  data-bs-parent="#accordionFlushExample">
+                  <div class="accordion-body">
+                    <table class="table table-sm">
+                      <thead>
+                        <tr>
+                          <th scope="col">CPF</th>
+                          <th scope="col">Categoria</th>
+                          <th scope="col">Ações</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>{{ morador.pessoa.cpf }}</td>
+                          <td><span class="badge text-bg-success">{{ morador.tipo_morador.tipo }}</span>
+                          </td>
+                          <td class="acao">
+                            <a href="{{ url_for('visualizarMorador', id=morador.id) }}"
+                              class="link botao-acao-tabela"><i class="fa-regular fa-eye"></i></a>
+                            <a href="{{ url_for('editarMorador', id=morador.id) }}" class="link botao-acao-tabela"><i
+                                class="fa-regular fa-pen"></i></a>
+                            <!-- Button trigger modal -->
+                            <button type="button" class="botao-acao-tabela" data-bs-toggle="modal"
+                              data-bs-target="#modalExclusaoMobile{{ morador.id }}">
+                              <i class="fa-regular fa-xmark"></i>
+                            </button>
+                            <!-- Modal -->
+                            <div class="modal fade" id="modalExclusaoMobile{{ morador.id }}" tabindex="-1"
+                              aria-labelledby="modalExclusaoMobile{{ morador.id }}Label" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <i class="fa-thin fa-square-xmark"></i>
+                                  </div>
+                                  <div class="modal-body">
+                                    <label class="custom-label-modal-body" for="removerProprietario">Deseja remover o(a)
+                                      morador(a)
+                                      {{ morador.pessoa.nome }} ?</label>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <form action="{{ url_for('excluirMorador', id=morador.id) }}" method="post">
+                                      <button type="submit" class="botao-default">Sim</button>
+                                    </form>
+                                    <button type="button" class="botao-transparente"
+                                      data-bs-dismiss="modal">Não</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              {% endif %}
+              {% endfor %}
+            </div>
+          </div>
+          {% set endpoint = 'listaMorador' %}
+          {% include 'pagination.html' %}
+        </div>
+        {% else %}
+        <div class="mensagem-indisponivel mt-3">
+          <div class="container">
+            <div class="row">
+              <div class="col-12">
+                <span> Não há moradores para serem exibidos.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock conteudo %}
+
+{% else %}
+{% include 'sem_autorizacao.html' %}
+{% endif%}

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>SCC - Sistema de Controle de Condomínio - PDF</title>
+</head>
+
+<body>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      border: 1px solid #000;
+      padding: 5px;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
+
+  {% if entity_name == 'imoveis' %}
+  <h1>Relatório de Imóveis</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Andar</th>
+        <th>Apartamento</th>
+        <th>Proprietário</th>
+        <th>Cadastro em</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for imovel in items %}
+      {% if imovel.ativo %}
+      <tr>
+        <td>{{ imovel.andar.nome }}</td>
+        <td>{{ imovel.apartamento }}</td>
+        <td>
+          {% for proprietario in proprietarios %}
+          {% if proprietario.id == imovel.pessoa_id %}
+          {{ proprietario.nome }}
+          {% endif %}
+          {% endfor %}
+        </td>
+        <td>{{ formatar_data_brasil(imovel.data_criacao) }}</td>
+      </tr>
+      {% endif %}
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+
+
+  {% if entity_name == 'proprietarios' %}
+  <h1>Relatório de Proprietários</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>CPF</th>
+        <th>E-mail</th>
+        <th>Cadastro em</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for proprietario in items %}
+      {% if proprietario.ativo %}
+      <tr>
+        <td>{{ proprietario.nome }}</td>
+        <td>{{ proprietario.cpf }}</td>
+        <td>{{ proprietario.email }}</td>
+        <td>{{ formatar_data_brasil(proprietario.data_criacao) }}</td>
+      </tr>
+      {% endif %}
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+
+  {% if entity_name == 'moradores' %}
+  <h1>Relatório de Moradores</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>CPF</th>
+        <th>RG</th>
+        <th>Complemento</th>
+        <th>Tipo morador</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for morador in items %}
+      {% if morador.pessoa and morador.tipo_morador and morador.pessoa.ativo and morador.ativo%}
+      <tr>
+        <td>{{ morador.pessoa.nome }}</td>
+        <td>{{ morador.pessoa.cpf }}</td>
+        <td>{{ morador.pessoa.rg }}</td>
+        <td>
+          {% if morador.imovel %}
+          {{ morador.imovel.andar.nome }}, Apartamento: {{ morador.imovel.apartamento }}
+          {% else %}
+          Sem imóvel
+          {% endif %}
+        </td>
+        <td>{{ morador.tipo_morador.tipo }}</td>
+      </tr>
+      {% endif %}
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+
+  {% if entity_name == 'produtos' %}
+  <h1>Relatório de Produtos</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Código do produto</th>
+        <th>Nome</th>
+        <th>Valor</th>
+        <th>Quantidade no estoque</th>
+        <th>Categoria</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for produto in items %}
+      {% if produto.ativo %}
+      <tr>
+        <td>{{ produto.codigo_produto }}</td>
+        <td>{{ produto.nome }}</td>
+        <td>{{ formatacao_valor_numerico(produto.valor) }}</td>
+        <td>{{ formatacao_valor_numerico(produto.quantidade_estoque) }}</td>
+        <td>
+          {% if produto.categoria.ativo == 1 %}
+          <span class="badge text-bg-success">{{ produto.categoria.tipo }}</span>
+          {% else %}
+          <span class="badge text-bg-danger">{{ Vazio }}</span>
+          {% endif %}
+        </td>
+      </tr>
+      {% endif %}
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+
+  {% if entity_name == 'usuarios' %}
+  <h1>Relatório de Usuários</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>E-mail</th>
+        <th>Número de contato</th>
+        <th>Cargo</th>
+        <th>Situação</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for usuario in items %}
+      {% if usuario.ativo %}
+      <tr>
+        <td>{{ usuario.nome }}</td>
+        <td>{{ usuario.email }}</td>
+        <td>{{ usuario.numero_contato }}</td>
+        <td><span class="badge text-bg-success">{{ usuario.tipo_administrador.tipo }}</span></td>
+        {% if usuario.ativo %}
+        <td><span class="badge text-bg-success">Ativo</span></td>
+        {% else %}
+        <td><span class="badge text-bg-danger">Inativo</span></td>
+        {% endif %}
+      </tr>
+      {% endif %}
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+
+  {% if entity_name == 'observacoes' %}
+  <h1>Relatório de Observações</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Conteúdo</th>
+        <th>Data de criação</th>
+        <th>Imóvel vinculado</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for observacao in items %}
+      {% if observacao.ativo %}
+      <tr>
+        <td>{{ observacao.descricao }}</td>
+        <td>{{ formatar_data_brasil(observacao.data_criacao) }}</td>
+        <td>
+          {% if observacao.imovel_id %}
+          {% if observacao.imoveis.ativo == 1 %}
+          <p>Andar: {{ observacao.imoveis.andar_id }}, Apartamento: {{ observacao.imoveis.apartamento }}</p>
+          {% else %}
+          <p>Nenhum</p>
+          {% endif %}
+          {% endif %}
+        </td>
+      </tr>
+      {% endif %}
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+
+
+
+</body>
+
+</html>

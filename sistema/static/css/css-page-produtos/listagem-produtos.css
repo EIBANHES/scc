@@ -1,0 +1,32 @@
+.dropdown-menu>li>a {
+    display: block;
+    padding: 3px 20px;
+    clear: both;
+    font-weight: normal;
+    line-height: 0.43;
+    color: #333333;
+    white-space: nowrap;
+}
+
+.dropdown-menu a,
+a.btn,
+.btn-group a {
+    text-decoration: none;
+}
+
+.dropdown-menu {
+    z-index: 1000;
+    float: left;
+    min-width: 140px;
+    font-size: 13px;
+    list-style: none;
+    background-color: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+    background-clip: padding-box;
+}
+
+a.link.link-mais-opcoes {
+    margin-left: 5px;
+}

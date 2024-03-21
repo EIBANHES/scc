@@ -1,0 +1,105 @@
+{% if current_user.is_authenticated %}
+{% extends 'base_page.html' %}
+
+{% block conteudo %}
+<section id="visualizacao-proprietario" class="pt-5">
+  <div class="container">
+    <div class="breadcrumb-pagina">
+      {% set breadcrumb_items=['Home', 'Proprietários', 'Visualizar proprietário'] %}
+      {% include 'breadcrumb.html'%}
+    </div>
+    <div class="card-info">
+      <div class="visualizacao-info">
+        <form action="">
+          <div class="row">
+            <div class="col-12 col-sm-12 col-md-12 col-xl-3 col-lg-3">
+              <div class="item-form">
+                <label for="nome" class="form-label">Nome: </label>
+                <input disabled class="form-control form-control-sm" type="text" id="nome" name="nome"
+                  value="{{ proprietario.nome }}">
+              </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-xl-3 col-lg-3">
+              <div class="item-form">
+                <label for="email" class="form-label">Email: </label>
+                <input disabled class="form-control form-control-sm" type="email" id="email" name="email"
+                  value="{{ proprietario.email }}">
+              </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-xl-3 col-lg-3">
+              <div class="item-form">
+                <label for="cpf" class="form-label">CPF: </label>
+                <input disabled class="form-control form-control-sm" type="text" id="cpf" name="cpf"
+                  value="{{ proprietario.cpf }}">
+              </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-xl-3 col-lg-3">
+              <div class="item-form">
+                <label for="rg" class="form-label">RG: </label>
+                <input disabled class="form-control form-control-sm" type="text" id="rg" name="rg"
+                  value="{{ proprietario.rg }}">
+              </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-xl-3 col-lg-3">
+              <div class="item-form">
+                <label for="data-nascimento" class="form-label">Data de nascimento: </label>
+                <input disabled class="form-control form-control-sm" type="date" id="data-nascimento"
+                  name="data-nascimento" value="{{ proprietario.data_nascimento }}">
+              </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-xl-3 col-lg-3">
+              <div class="item-form">
+                <label for="profissao" class="form-label">Profissão: </label>
+                <input disabled class="form-control form-control-sm" type="text" id="profissao" name="profissao"
+                  value="{{ proprietario.profissao }}">
+              </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-xl-3 col-lg-3">
+              <div class="item-form">
+                <label for="celular-principal" class="form-label">Número de contato: </label>
+                <input disabled class="form-control form-control-sm" type="text" id="celular-principal"
+                  name="celular-principal" value="{{ proprietario.numero_principal }}">
+              </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-xl-3 col-lg-3">
+              <div class="item-form">
+                <label for="celular-secundario" class="form-label">Número secundário: </label>
+                <input disabled class="form-control form-control-sm" type="text" id="celular-secundario"
+                  name="celular-secundario" value="{{ proprietario.numero_secundario }}">
+              </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-xl-3 col-lg-3">
+              <div class="item-form">
+                <label for="residencia" class="form-label">
+                  {% if proprietario.imoveis|length > 1 %}
+                  Imóveis
+                  {% else %}
+                  Imóvel
+                  {% endif %}
+                </label>
+                <br>
+                {% for imovel in proprietario.imoveis %}
+                {% if imovel.ativo == 1 %}
+                <input class="form-control form-control-sm" type="text" id="residencia" name="residencia"
+                  value="{{ imovel.andar.nome }}, Apartamento: {{ imovel.apartamento }}"
+                  style="display: inline-block; margin-right: 5px; margin-bottom: 10px;" disabled>
+                {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="botoes-acao mt-3">
+                <a href="javascript:history.back()" class="botao-transparente">Voltar</a>
+                <a href="{{ url_for('editarProprietario', id=proprietario.id) }}" class="botao-default">Editar</a>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock conteudo %}
+{% else %}
+{% include 'sem_autorizacao.html' %}
+{% endif%}

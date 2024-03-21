@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.pyc
+venv/
+
+# pycharm
+.idea/
+
+#vscode
+.vscode
+
+# arquivos individuais de cada projeto
+config.py
+migrations/
+plugins/

@@ -1,0 +1,122 @@
+{% if current_user.is_authenticated %}
+{% extends 'base_page.html' %}
+
+{% block conteudo %}
+<section id="editar-morador" class="pt-5">
+  <div class="container">
+    <div class="breadcrumb-pagina">
+      {% set breadcrumb_items=['Home', 'Moradores', 'Editar morador'] %}
+      {% include 'breadcrumb.html'%}
+    </div>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+      {{ message }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    <div class="card-info mt-4 mt-sm-5 mt-lg-5">
+      <form action="" method="post">
+        <div class="row">
+          <div class="col-12 col-sm-12 col-md-12 col-xl-3 col-lg-3">
+            <div class="item-form">
+              <label for="nome" class="form-label">Nome: </label>
+              <input class="form-control form-control-sm" type="text" id="nome" name="nome"
+                value="{{ morador.pessoa.nome }}">
+            </div>
+          </div>
+          <div class="col-12 col-sm-12 col-md-12 col-xl-3 col-lg-3">
+            <div class="item-form">
+              <label for="email" class="form-label">Email: </label>
+              <input class="form-control form-control-sm" type="email" id="email" name="email"
+                value="{{ morador.pessoa.email }}">
+            </div>
+          </div>
+          <div class="col-12 col-sm-12 col-md-12 col-xl-3 col-lg-3">
+            <div class="item-form">
+              <label for="cpf" class="form-label">CPF: </label>
+              <input class="form-control form-control-sm" type="text" id="cpf" name="cpf"
+                value="{{ morador.pessoa.cpf }}">
+            </div>
+          </div>
+          <div class="col-12 col-sm-12 col-md-12 col-xl-3 col-lg-3">
+            <div class="item-form">
+              <label for="rg" class="form-label">RG: </label>
+              <input class="form-control form-control-sm" type="text" id="rg" name="rg" value="{{ morador.pessoa.rg }}">
+            </div>
+          </div>
+          <div class="col-12 col-sm-12 col-md-12 col-xl-3 col-lg-3">
+            <div class="item-form">
+              <label for="data-nascimento" class="form-label">Data de nascimento: </label>
+              <input class="form-control form-control-sm" type="date" id="data-nascimento" name="data-nascimento"
+                value="{{ morador.pessoa.data_nascimento }}">
+            </div>
+          </div>
+          <div class="col-12 col-sm-12 col-md-12 col-xl-3 col-lg-3">
+            <div class="item-form">
+              <label for="profissao" class="form-label">Profissão: </label>
+              <input class="form-control form-control-sm" type="text" id="profissao" name="profissao"
+                value="{{ morador.pessoa.profissao }}">
+            </div>
+          </div>
+          <div class="col-12 col-sm-12 col-md-12 col-xl-3 col-lg-3">
+            <div class="item-form">
+              <label for="celular-principal" class="form-label">Número de contato: </label>
+              <input class="form-control form-control-sm" type="text" id="celular-principal" name="celular-principal"
+                value="{{ morador.pessoa.numero_principal }}" maxlength="11">
+            </div>
+          </div>
+          <div class="col-12 col-sm-12 col-md-12 col-xl-3 col-lg-3">
+            <div class="item-form">
+              <label for="celular-secundario" class="form-label">Número secundário: </label>
+              <input class="form-control form-control-sm" type="text" id="celular-secundario" name="celular-secundario"
+                value="{{ morador.pessoa.numero_secundario }}" maxlength="11">
+            </div>
+          </div>
+          <div class="col-12 col-sm-12 col-md-12 col-xl-3 col-lg-3 item-form">
+            <div class="">
+              <label for="tipo-morador" class="form-label">Tipo morador </label>
+              <select class="form-select form-select-sm" aria-label="Default select example" name="tipo-morador"
+                id="tipo-morador">
+                <option selected value="{{ morador.tipo_morador.id }}">{{ morador.tipo_morador.tipo }}</option>
+                {% for tipoMorador in tipo_morador %}
+                <option value="{{ tipoMorador.id }}">{{ tipoMorador.tipo }}</option>
+                {% endfor%}
+              </select>
+            </div>
+          </div>
+          <div class="col-12 col-sm-12 col-md-12 col-xl-3 col-lg-3">
+            <div class="item-form">
+              <label for="residencia" class="form-label">Andar e apartamento: </label>
+              <select class="form-select form-select-sm" aria-label="Default select example" name="residencia">
+                {% for imovel in imoveis %}
+                {% if imovel.ativo == 1 %}
+                {% if imovel.id == morador.imovel_id %}
+                <option value="{{ imovel.id }}" selected>{{ imovel.andar.nome }}, Apartamento: {{ imovel.apartamento }}
+                </option>
+                {% else %}
+                <option value="{{ imovel.id }}">{{ imovel.andar.nome }}, Apartamento: {{ imovel.apartamento }}</option>
+                {% endif %}
+                {% endif %}
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="botoes-acao mt-3">
+              <a href="javascript:history.back()" class="botao-transparente">Voltar</a>
+              <button type="submit" class="botao-default">Editar</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+{% endblock conteudo %}
+{% else %}
+{% include 'sem_autorizacao.html' %}
+{%endif%}

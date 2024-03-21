@@ -1,0 +1,9 @@
+#visualizacao-morador {
+    margin-bottom: 80px;
+}
+
+.card-info {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 21px;
+    margin-top: 40px;
+}

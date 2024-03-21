@@ -1,0 +1,9 @@
+{% if current_user.is_authenticated %}
+{% extends 'base_page.html' %}
+
+{% block conteudo %}
+<h1>Pagamento realizado</h1>
+{% endblock conteudo %}
+{% else %}
+{% include 'sem_autorizacao.html' %}
+{% endif%}

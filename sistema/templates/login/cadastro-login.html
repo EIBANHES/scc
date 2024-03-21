@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% block conteudo %}
+<section id="cadastro">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="area-cadastro">
+          <div class="form-cadastro">
+            <div class="col-12">
+              {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+              {% for category, message in messages %}
+              <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+              {% endfor %}
+              {% endif %}
+              {% endwith %}
+            </div>
+            <form class="needs-validation" action="" method="post" novalidate>
+              <div class="row">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4">
+                  <div class="item-form">
+                    <label for="nome" class="form-label">Nome: </label>
+                    <input class="form-control form-control-sm" type="text" id="nome" name="nome" required>
+                  </div>
+                </div>
+                <div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4">
+                  <div class="item-form">
+                    <label for="cpf_cnpj" class="form-label">CPF: </label>
+                    <input class="form-control form-control-sm" type="text" id="cpf" name="cpf" required>
+                  </div>
+                </div>
+                <div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4">
+                  <div class="item-form">
+                    <label for="cpfcnpj" class="form-label">CNPJ (opcional): </label>
+                    <input class="form-control form-control-sm" type="text" id="cnpj" name="cnpj">
+                  </div>
+                </div>
+                <div id="hidden-razao" class="col-12 col-sm-12 col-md-12 col-xl-4 col-lg-4">
+                  <div class="item-form" id="razao-social-container">
+                    <label for="cpfcnpj" class="form-label">Razão social (opcional): </label>
+                    <input class="form-control form-control-sm" type="text" id="razao_social" name="razao_social">
+                  </div>
+                </div>
+                <div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4">
+                  <div class="item-form">
+                    <label for="email" class="form-label">Email: </label>
+                    <input type="email" class="form-control form-control-sm" id="email" name="email" required>
+                  </div>
+                </div>
+                <div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4">
+                  <div class="item-form">
+                    <label for="celular-principal" class="form-label">Número de contato: </label>
+                    <input class="form-control form-control-sm" type="text" id="celular-principal"
+                      name="celular-principal" required>
+                  </div>
+                </div>
+                <div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4">
+                  <div class="item-form">
+                    <label for="tipo-administrador" class="form-label">Tipo administrador: </label>
+                    <br>
+                    <select class="form-select form-select-sm" aria-label="Default select example"
+                      name="tipo-administrador" required>
+                      <option selected disabled value="">Selecione...</option>
+                      {% for adm in tipo_administrador %}
+                      <option value="{{ adm.id }}">{{ adm.tipo }}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4">
+                  <div class="item-form">
+                    <label for="senha" class="form-label">Senha: </label>
+                    <input type="password" class="form-control form-control-sm" id="senha" name="senha" required>
+                  </div>
+                </div>
+              </div>
+              <div class="botoes-acao mt-3">
+                <a class="botao-transparente" href="javascript:history.back()">Voltar</a>
+                <button class="botao-default" type="submit">Cadastrar-se</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock conteudo %}

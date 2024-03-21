@@ -1,0 +1,212 @@
+.imagem-check{
+    display: flex;
+    justify-content: center;
+}
+
+.billet-success{
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.botoes-boleto{
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+}
+
+.box.box-gray.font-4.ordem-pagamento-pagador{
+    margin-top: 30px;
+    transition: all .3s ease;
+    background-color: #efefef;
+    box-sizing: border-box;
+    padding: 30px;
+}
+
+.box.box-gray.font-4.ordem-pagamento-recebedor {
+    margin-top: 30px;
+    transition: all .3s ease;
+    background-color: #efefef;
+    box-sizing: border-box;
+    padding: 30px;
+}
+
+.box.box-gray.font-4.ordem-pagamento-info{
+    margin-top: 30px;
+    transition: all .3s ease;
+    background-color: #efefef;
+    box-sizing: border-box;
+    padding: 30px;
+}
+
+p.total {
+    justify-content: end;
+    display: flex;
+}
+
+h2.font-4.font-bold {
+    display: flex;
+    justify-content: end;
+}
+
+section#pagamento-boleto {
+    background-color: #fff;
+    border: 1px #ddd solid;
+    box-shadow: 0 2px 6px #00000036;
+    border-radius: 7px;
+    float: left;
+    max-height: 1500vh;
+    opacity: 1;
+    overflow: hidden;
+    padding: 30px;
+    position: relative;
+    transition: all .3s ease-in;
+    width: 100%;
+}
+
+.billet-showing{
+    max-height: 1000vh;
+    opacity: 1;
+}
+
+.font-bold {
+    font-weight: bold;
+}
+
+.item {
+    margin-bottom: 20px;
+}
+.header-cell {
+    padding: 0 10px; 
+}
+
+.data-cell {
+    padding: 5px; 
+}
+
+#boleto {
+    margin-bottom: 50px;
+}
+
+#boleto .hidden {
+    display: none;
+}
+
+#boleto .container-boleto {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 21px;
+}
+
+#boleto .box-informacao {
+    border-radius: 5px;
+    background-color: #EFEFEF;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+#boleto .box-informacao .descricao {
+    color: var(--blue);
+    margin: 0px;
+    font-weight: 500;
+    font-size: 15px;
+}
+
+#boleto .info-pagamento {
+    display: flex;
+    justify-content: space-between;
+}
+
+#boleto .info-pagamento .titulo {
+    margin: 0px;
+    font-weight: 500;
+    color: var(--blue);
+}
+
+#boleto .info-pagamento .info-data {
+    margin-right: 100px;
+}
+
+
+#boleto .botao-pagamento {
+    text-align: center;
+    margin-top: 25px;
+}
+
+#boleto .box-informacao h5 {
+    color: var(--blue);
+    font-weight: 500;
+}
+
+.payment-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.payment-table th, .payment-table td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.payment-table th {
+    background-color: #f2f2f2;
+}
+
+.quantity-header{
+    color: var(--blue);
+    margin: 0px;
+    font-weight: 500;
+    font-size: 15px;
+}
+
+.quantity{
+    color: var(--blue);
+    margin: 0px;
+    font-weight: 500;
+    font-size: 15px;
+}
+
+.total-quantity{
+    color: var(--blue);
+    margin: 0px;
+    font-weight: 500;
+    font-size: 15px;
+}
+
+/* Responsividade */
+
+@media (max-width: 1440px) {}
+
+@media (max-width: 1399.98px) {}
+
+@media (max-width: 1199.98px) {}
+
+@media(max-width: 1024px) {}
+
+@media (max-width: 991.98px) {}
+
+@media (max-width: 767.98px) {
+    .payment-table th, .payment-table td {
+        padding: 4px;
+    }
+    
+    .payment-table .quantity-header, .payment-table .quantity {
+        display: none;
+    }
+
+    td.total-quantity {
+        display: none;
+    }
+    
+    .payment-table tr {
+        margin-bottom: 5px;
+    }
+
+    #visualizarButton {
+        display: none;
+    }
+}
+
+@media (max-width: 575.98px) {}
+
+@media(max-width: 425px) {}

@@ -1,0 +1,18 @@
+div:where(.swal2-icon).swal2-info {
+  border-color: #FF9308 !important;
+  color: #FF9308 !important;
+}
+
+div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm {
+  background-color: var(--darkBlue) !important;
+  width: 80px;
+}
+
+div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm:focus {
+  box-shadow: none !important;
+  border: 1px solid var(--darkBlue);
+}
+
+div:where(.swal2-container) button:where(.swal2-styled).swal2-cancel {
+  width: 80px !important;
+}

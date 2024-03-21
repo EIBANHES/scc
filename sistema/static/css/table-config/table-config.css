@@ -1,0 +1,140 @@
+.table-responsive {
+    overflow-x: auto;
+    background: #ffffff;
+    padding: 10px 5px;
+    border-radius: 15px;
+}
+
+.table {
+    margin-bottom: 0px;
+}
+
+.tabela-info {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+}
+
+.table thead tr th {
+    color: var(--blue);
+}
+
+.table thead tr th a {
+    color: var(--blue);
+    text-decoration: none;
+}
+
+.table tbody tr td {
+    font-size: 15px;
+    color: var(--blue);
+}
+
+.table thead tr th:not(:first-child),
+.table tbody tr td:not(:first-child) {
+    text-align: center;
+}
+
+.acao .botao-acao-tabela {
+    margin-right: 5px;
+}
+
+tr.success {
+    background-color: #dff0d8;
+}
+
+tr.danger {
+    background-color: #f2dede;
+}
+
+.dados-tabela-mobile {
+    display: none;
+}
+
+/* Botão ação tabela */
+.botao-acao-tabela {
+    color: var(--darkBlue);
+    background-color: white;
+    font-size: 15px;
+    border: none;
+    padding: unset;
+}
+
+.botao-acao-tabela:hover {
+    color: var(--darkBlue);
+}
+
+/* Responsividade */
+
+@media (max-width: 1440px) {}
+
+@media (max-width: 1399.98px) {}
+
+@media (max-width: 1199.98px) {}
+
+@media(max-width: 1024px) {
+
+    .pagination .page-item .page-link,
+    #area-morador .dados-tabela .table tbody tr td,
+    #area-morador .dados-tabela .table thead tr th,
+    #listagem-proprietario .dados-tabela .table tbody tr td,
+    #listagem-proprietario .dados-tabela .table thead tr th,
+    #area-imoveis .dados-tabela .table tbody tr td,
+    #area-imoveis .dados-tabela .table thead tr th,
+    #area-almoxarifado .dados-tabela .table tbody tr td,
+    #area-almoxarifado .dados-tabela .table thead tr th,
+    #controle-usuario .dados-tabela .table tbody tr td,
+    #controle-usuario .dados-tabela .table thead tr th {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .dados-tabela {
+        display: none;
+    }
+
+    .tabela-info {
+        padding: 5px;
+    }
+
+    .dados-tabela-mobile {
+        display: block;
+    }
+
+    .dados-tabela-mobile .table tbody tr td,
+    .dados-tabela-mobile .table thead tr th {
+        font-size: 14px;
+    }
+
+    .accordion-flush .accordion-item .accordion-button,
+    .accordion-flush .accordion-item .accordion-button.collapsed {
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 767.98px) {}
+
+@media (max-width: 575.98px) {
+
+    .accordion-flush .accordion-item .accordion-button,
+    .accordion-flush .accordion-item .accordion-button.collapsed {
+        font-size: 14px;
+    }
+
+    .dados-tabela-mobile .table tbody tr td,
+    .dados-tabela-mobile .table thead tr th {
+        font-size: 13px;
+    }
+}
+
+
+@media(max-width: 425px) {
+
+    .accordion {
+        --bs-accordion-btn-icon-width: 13px !important;
+    }
+
+    #area-morador .dados-tabela-mobile .table tbody tr td,
+    #area-morador .dados-tabela-mobile .table thead tr th {
+        font-size: 13px;
+    }
+}

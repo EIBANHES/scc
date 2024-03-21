@@ -1,0 +1,113 @@
+{% if current_user.is_authenticated %}
+{% extends 'base_page.html' %}
+{% block conteudo %}
+<section id="visualizacao-imovel" class="pt-5">
+  <div class="container">
+    <div class="breadcrumb-pagina">
+      {% set breadcrumb_items=['Home', 'Imóveis', 'Visualizar imóvel'] %}
+      {% include 'breadcrumb.html'%}
+    </div>
+    <div class="card-info">
+      <div class="visualizar-info">
+        <form action="">
+          <div class="row">
+            <div class="col-12 col-sm-12 col-md-12 col-xl-3 col-lg-3">
+              <div class="item-form">
+                <label for="andar" class="form-label">Andar:</label>
+                <input class="form-control form-control-sm" type="text" id="andar" name="andar"
+                  value="{{ imovel.andar.nome }}" disabled>
+              </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-xl-3 col-lg-3">
+              <div class="item-form">
+                <label for="apartamento" class="form-label">Apartamento:</label>
+                <input class="form-control form-control-sm" type="apartamento" id="apartamento" name="apartamento"
+                  value="{{ imovel.apartamento }}" disabled>
+              </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-xl-3 col-lg-3">
+              <div class="item-form">
+                <label for="categoria-imovel" class="form-label">Proprietário responsável:</label>
+                <select class="form-select form-select-sm" aria-label="Default select example" name="categoria-imovel"
+                  disabled>
+                  <option selected>{{ proprietario.nome }}</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-xl-3 col-lg-3">
+              <div class="item-form">
+                <label for="imovelNumeroGaragem" class="form-label">Vaga da garagem:</label>
+                <input name="imovelNumeroGaragem" class="form-control form-control-sm" type="text"
+                  id="imovelNumeroGaragem" value="{{ imovel.numero_garagem }}" disabled>
+              </div>
+            </div>
+
+            <div class="col-12 col-sm col-12 col-sm-12 col-md-12 col-xl-3 col-lg-3">
+              <div class="item-form">
+                <label for="imovelAndarGaragem" class="form-label">Andar da garagem:</label>
+                <div class="input-group">
+                  <select name="imovelAndarGaragem" class="form-select form-select-sm" id="imovelAndarGaragem" disabled>
+                    <option selected>{{ andar_garagem.tipo }}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 col-sm col-12 col-sm-12 col-md-12 col-xl-3 col-lg-3">
+              <div class="item-form">
+                <label for="possui_pet" class="form-label">Possui pet?</label>
+                <br>
+                <select class="form-select form-select-sm" aria-label="Default select example" name="possui_pet"
+                  id="possui_pet" disabled>
+                  <option selected disabled value="{{ '1' if imovel.possui_pet else '0' }}">
+                    {{ "Sim" if imovel.possui_pet else "Não" }}
+                  </option>
+                  <option value='1'>Sim</option>
+                  <option value='0'>Não</option>
+                </select>
+              </div>
+            </div>
+
+            <div id="visualizacao" class="col-12 col-sm-12 col-md-12 col-xl-3 col-lg-3 hidden">
+              <div class="item-form">
+                <label for="tipo_pet" class="form-label">Espécie animal:</label>
+                <div class="input-group">
+                  <select name="tipo_pet" class="form-select form-select-sm" id="tipo_pet" disabled>
+                    <option selected disabled value="">{{imovel.tipo_animal.tipo}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            {% if observacoes|length > 0 %}
+            <div class="col-12">
+              <div class="divisor"></div>
+              <div class="item-form">
+                <label for="imovelObservacao" class="form-label">
+                  {% if observacoes|length > 1 %} Observações: {% else %} Observação: {% endif %}
+                </label>
+                {% for observacao in observacoes %}
+                {% if observacao.ativo == 1 %}
+                <textarea class="form-control form-control-sm observacao-textarea"
+                  disabled>{{ observacao.descricao }}</textarea>
+                {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+            {% endif %}
+            <div class="col-12">
+              <div class="botoes-acao mt-3">
+                <a href="javascript:history.back()" class="botao-transparente">Voltar</a>
+                <a href="{{ url_for('editarImovel', id=imovel.id) }}" class="botao-default">Editar</a>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock conteudo %}
+{% else %}
+{% include 'sem_autorizacao.html' %}
+{% endif%}

@@ -1,0 +1,103 @@
+{% if current_user.is_authenticated %}
+{% extends 'base_page.html' %}
+
+{% block conteudo %}
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var botaoCopiar = document.querySelector('.botao-transparente');
+    var botaoCopiado = document.querySelector('.botao-transparente.hidden');
+    var codigoElement = document.querySelector('.codigo');
+    var codigo = codigoElement.textContent;
+
+    botaoCopiar.addEventListener('click', function () {
+      var tempInput = document.createElement('input');
+      tempInput.value = codigo;
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      document.execCommand('copy');
+      document.body.removeChild(tempInput);
+
+      botaoCopiar.classList.add('hidden');
+      botaoCopiado.classList.remove('hidden');
+
+      setTimeout(function () {
+        botaoCopiado.classList.add('hidden');
+        botaoCopiar.classList.remove('hidden');
+      }, 3000);
+    });
+  });
+</script>
+
+<section id="pix" class="pt-5">
+  <div class="container">
+    <div class="breadcrumb-pagina">
+      {% set breadcrumb_items=['Home', 'Formas de Pagamento', 'Pagamento pix'] %}
+      {% include 'breadcrumb.html'%}
+    </div>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+      {{ message }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    <div class="container-pix mt-4 mt-sm-5 mt-lg-5">
+      <div class="qrcode-pix">
+        <span class="check"><img src="static/imagens/icone-check.png" alt="Check"></span>
+        <p class="descricao-pix">Código Pix gerado!</p>
+        <div class="copia-cola">
+          <span class="codigo hidden">{{copia_cola}}</span>
+          <button class="botao-transparente">Copiar código copia e cola</button>
+          <button class="botao-transparente hidden"><i class="fa-solid fa-check"></i> Código copiado com sucesso!</button>
+        </div>
+        <img class="qrcode-pix" src="{{ url_for('static', filename='imagens/qrCodeImage.png') }}" alt="QR Code PIX">
+        <p class="descricao-pix">Pagamentos por Pix são confirmados em menos de um minuto.</p>
+      </div>
+      <div class="divisor"></div>
+      <h5>Resumo do pedido:</h5>
+      <div class="box-informacao">
+        <div class="informacoes-pessoais">
+          <p class="descricao">{{nome}}</p>
+          <p class="descricao">{{cpf}}</p>
+          <p class="descricao">{{numero_contato}}</p>
+        </div>
+      </div>
+      <div class="box-informacao">
+        <div class="info-pagamento">
+          <div class="info-data">
+            <p class="titulo">Data:</p>
+            <p class="descricao">{{ data_formatada }}</p>
+          </div>
+          <div class="info-pedido">
+            <p class="titulo">Pedido:</p>
+            <p class="descricao">{{id_pix}}</p>
+          </div>
+          <div class="tipo-pag">
+            <p class="titulo">Tipo pagamento:</p>
+            <p class="descricao">Pix</p>
+          </div>
+          <div class="info-valor">
+            <p class="titulo">Valor:</p>
+            <p class="descricao">R$ {{valor_pix}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="divisor"></div>
+      <div class="box-informacao">
+        <p class="titulo">Status:</p>
+        <p class="descricao">{{ status_pagamento }}</p>
+      </div>
+    </div>
+    <div class="botao-pagamento">
+      <a href="{{ url_for('formasPagamento') }}" class="botao-default">Alterar forma de pagamento</a>
+    </div>
+  </div>
+</section>
+{% endblock conteudo %}
+{% else %}
+{% include 'sem_autorizacao.html' %}
+{% endif%}

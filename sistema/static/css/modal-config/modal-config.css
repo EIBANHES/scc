@@ -1,0 +1,63 @@
+.modal-content {
+    border-radius: 5px;
+}
+
+.modal-content.topo {
+    width: 95%;
+    margin: 0 auto; 
+}
+
+.modal-title {
+    color: var(--blue);
+}
+
+.modal-header {
+    justify-content: center;
+    border-bottom: unset;
+}
+
+.modal-header svg {
+    color: red;
+    font-size: 70px;
+}
+
+.modal-header-success{
+    justify-content: center;
+    border-bottom: unset;
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    padding: var(--bs-modal-header-padding);
+}
+.modal-header-success svg {
+    color: green;
+    font-size: 70px;
+    
+}
+
+.modal-body {
+    padding: 5px 15px;
+}
+
+.custom-label-modal-body {
+    justify-content: center;
+    font-size: 15px;
+    margin-bottom: 0;
+}
+
+.custom-label-modal-body-forma-pagamento {
+    display: flex;
+    justify-content: center;
+    font-size: 15px;
+    margin-bottom: 0;
+}
+
+
+.modal-footer {
+    border-top: unset;
+    justify-content: center;
+}
+
+.modal-footer>* {
+    margin: unset;
+}

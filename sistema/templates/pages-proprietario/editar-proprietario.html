@@ -1,0 +1,113 @@
+{% if current_user.is_authenticated %}
+{% extends 'base_page.html' %}
+
+{% block conteudo %}
+<section id="editar-proprietario" class="pt-5">
+  <div class="container">
+    <div class="breadcrumb-pagina">
+      {% set breadcrumb_items=['Home', 'Proprietários', 'Editar proprietário'] %}
+      {% include 'breadcrumb.html'%}
+    </div>
+    <div class="card-info mt-4 mt-sm-5 mt-lg-5">
+      <form action="" method="post" id="editar-proprietario-form">
+        <div class="row">
+          <div class="col-12 col-sm-12 col-md-12 col-xl-3 col-lg-3">
+            <div class="item-form">
+              <label for="nome" class="form-label">Nome: </label>
+              <input class="form-control form-control-sm" type="text" id="nome" name="nome" value="{{ pessoa.nome }}">
+            </div>
+          </div>
+          <div class="col-12 col-sm-12 col-md-12 col-xl-3 col-lg-3">
+            <div class="item-form">
+              <label for="email" class="form-label">Email: </label>
+              <input class="form-control form-control-sm" type="email" id="email" name="email"
+                value="{{ pessoa.email }}">
+            </div>
+          </div>
+          <div class="col-12 col-sm-12 col-md-12 col-xl-3 col-lg-3">
+            <div class="item-form">
+              <label for="cpf" class="form-label">CPF: </label>
+              <input class="form-control form-control-sm" type="text" id="cpf" name="cpf" value="{{ pessoa.cpf }}">
+            </div>
+          </div>
+          <div class="col-12 col-sm-12 col-md-12 col-xl-3 col-lg-3">
+            <div class="item-form">
+              <label for="rg" class="form-label">RG: </label>
+              <input class="form-control form-control-sm" type="text" id="rg" name="rg" value="{{ pessoa.rg }}">
+            </div>
+          </div>
+          <div class="col-12 col-sm-12 col-md-12 col-xl-3 col-lg-3">
+            <div class="item-form">
+              <label for="data-nascimento" class="form-label">Data de nascimento: </label>
+              <input class="form-control form-control-sm" type="date" id="data-nascimento" name="data-nascimento"
+                value="{{ pessoa.data_nascimento }}">
+            </div>
+          </div>
+          <div class="col-12 col-sm-12 col-md-12 col-xl-3 col-lg-3">
+            <div class="item-form">
+              <label for="profissao" class="form-label">Profissão: </label>
+              <input class="form-control form-control-sm" type="text" id="profissao" name="profissao"
+                value="{{ pessoa.profissao }}">
+            </div>
+          </div>
+          <div class="col-12 col-sm-12 col-md-12 col-xl-3 col-lg-3">
+            <div class="item-form">
+              <label for="celular-principal" class="form-label">Número de contato: </label>
+              <input class="form-control form-control-sm" type="text" id="celular-principal" name="celular-principal"
+                value="{{ pessoa.numero_principal }}" maxlength="11">
+            </div>
+          </div>
+          <div class="col-12 col-sm-12 col-md-12 col-xl-3 col-lg-3">
+            <div class="item-form">
+              <label for="celular-secundario" class="form-label">Número secundário: </label>
+              <input class="form-control form-control-sm" type="text" id="celular-secundario" name="celular-secundario"
+                value="{{ pessoa.numero_secundario }}" maxlength="11">
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="botoes-acao mt-3">
+              <a href="javascript:history.back()" class="botao-transparente">Voltar</a>
+              <button type="submit" id="editar-prop" class="botao-default">Editar</button>
+            </div>
+          </div>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</section>
+{% endblock conteudo %}
+{% else %}
+{% include 'sem_autorizacao.html' %}
+{%endif%}
+{% block script %}
+<script>
+  document.getElementById('editar-prop').addEventListener('click', exibeMensagem);
+
+  function exibeMensagem(event) {
+    event.preventDefault();
+    Swal.fire({
+      title: 'Atenção!',
+      text: 'Deseja mesmo editar este proprietário?',
+      icon: 'info',
+      showCancelButton: true,
+      confirmButtonText: 'Sim',
+      cancelButtonText: 'Não',
+      showClass: {
+        popup: 'animate__animated animate__fadeInDown'
+      },
+      hideClass: {
+        popup: 'animate__animated animate__fadeOutUp'
+      }
+    }).then((e) => {
+      console.log(e);
+      if (e.isConfirmed) {
+        document.getElementById('editar-proprietario-form').submit();
+      } else {
+        Swal.close();
+      }
+    });
+  }
+
+</script>
+{% endblock script %}

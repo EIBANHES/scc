@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block conteudo %}
+<section id="pagina-nao-encontrada">
+    <div class="autorizacao-container">
+        <div class="imagem">
+            <img src="/static/imagens/warnning.jpg" alt="Atenção">
+        </div>
+        <div class="mensagem">
+            <h6>Não foi encontrada nenhuma página</h6>
+            <a href="javascript:history.back()" class="botao-default">Voltar</a>
+        </div>
+    </div>
+</section>
+{% endblock conteudo %}

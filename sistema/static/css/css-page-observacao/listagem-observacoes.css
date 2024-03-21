@@ -1,0 +1,72 @@
+.note {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* border: 1px solid #ccc; */
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #f8f8f8;
+}
+
+#listar-observacoes .timestamp {
+    margin-top: 5px;
+    font-size: 0.8em;
+    color: #888;
+    text-align: end;
+}
+
+.note .descricao {
+    margin-top: 5px;
+}
+
+.acoes a {
+    text-decoration: none;
+    margin-right: 10px;
+}
+
+.observacao-textarea {
+    margin-bottom: 0.5rem;
+}
+
+textarea {
+    resize: none;
+    height: 130px;
+}
+
+/*  */
+
+#listar-observacoes {
+    margin-bottom: 50px;
+}
+
+#listar-observacoes .observacao-container a {
+    text-decoration: none;
+    color: var(--blue);
+}
+
+#listar-observacoes .observacao-container {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+#listar-observacoes .observacao-container .observacao-conteudo {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#listar-observacoes .observacao-container .observacao-conteudo p {
+    margin: 0;
+    font-weight: 600;
+}
+
+#listar-observacoes .observacao-container .observacao-conteudo span {
+    font-size: 15px;
+    text-align: justify;
+}
+
+#listar-observacoes .observacao-container .acoes {
+    display: flex;
+    justify-content: end;
+}

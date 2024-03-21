@@ -1,0 +1,145 @@
+{% if current_user.is_authenticated %}
+
+{% extends 'base_page.html' %}
+
+{% block conteudo %}
+<section id="topo-configuracao">
+  <div class="container">
+    <div class="filtro-busca-item">
+      <div class="row">
+        {% set rota='cadastrarCondominio' %}
+        {% set nome_botao='Adicionar novo condomínio' %}
+        {% set placeholder='Buscar condominio...' %}
+        {% include 'componente-filtro-cadastro.html'%}
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="filtro-pesquisa">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="botao-filtragem">
+          <button class="botao-default" data-bs-toggle="modal" data-bs-target="#filtroModal"><i
+              class="fa-solid fa-filter"></i> Filtro
+          </button>
+          <!-- Modal de Filtro -->
+          <div class="modal fade" id="filtroModal" tabindex="-1" aria-labelledby="filtroModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="filtroModalLabel">Filtro de busca</h5>
+                </div>
+                <div class="modal-body">
+                  <form action="/index" method="get">
+                    <!-- Conteúdo do filtro (campos com selects) -->
+                    <div class="form-group mb-3">
+
+                    </div>
+                    <div class="form-group mb-3">
+
+                    </div>
+                    <div class="form-group mb-3">
+
+                    </div>
+                    <div class="modal-footer">
+                      <button type="submit" class="botao-default">Filtrar</button>
+                      <button type="button" class="botao-transparente" data-bs-dismiss="modal">
+                        Fechar
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="listagem-condominio">
+  <div class="dados-tabela">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-lg-6">
+          <div class="botao-exportar-pdf mt-3">
+            <a href="{{ url_for('exportar_pdf_rota', entity_name=entity_name) }}" class="botao-pdf"><i
+                class="fa-solid fa-file-pdf"></i> Exportar para PDF</a>
+          </div>
+        </div>
+        <div class="col-12 pt-5">
+          <div class="tabela-info">
+            <div class="table-responsive">
+              <table class="table table-sm">
+                <thead>
+                  <tr>
+                    <th scope="col"><a href="">Razão social</a>
+                    </th>
+                    <th scope="col">Nome fantasia/apelido</th>
+                    <th scope="col">Finalidade</th>
+                    <th scope="col">Ações</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="acao">
+                      <a href="" class="link botao-acao-tabela"><i class="fa-regular fa-eye"></i></a>
+                      <a href="" class="link botao-acao-tabela"><i class="fa-regular fa-pen"></i></a>
+                      <!-- Button trigger modal -->
+                      <button type="button" class="botao-acao-tabela" data-bs-toggle="modal"
+                        data-bs-target="#modalExclusaoProprietario">
+                        <i class="fa-regular fa-xmark"></i>
+                      </button>
+                      <!-- Modal -->
+                      <div class="modal fade" id="modalExclusaoProprietario" tabindex="-1"
+                        aria-labelledby="modalExclusaoProprietarioLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                          <div class="modal-content topo">
+                            <div class="modal-header">
+                              <i class="fa-thin fa-square-xmark"></i>
+                            </div>
+                            <div class="modal-body">
+                              <p class="custom-label-modal-body" for="removerProprietario">
+                                Deseja remover o
+                                proprietário ?</p>
+                            </div>
+                            <div class="modal-footer">
+                              <form action="" method="post">
+                                <button type="submit" class="botao-default">Sim</button>
+                              </form>
+                              <button type="button" class="botao-transparente" data-bs-dismiss="modal">Não
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="mensagem-indisponivel mt-3">
+          <div class="container">
+            <div class="row">
+              <div class="col-12">
+                <span>Não há condomínios para serem exibidos.</span>
+              </div>
+            </div>
+          </div>
+        </div> -->
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock conteudo %}
+{% else %}
+{% include 'sem_autorizacao.html' %}
+{% endif%}

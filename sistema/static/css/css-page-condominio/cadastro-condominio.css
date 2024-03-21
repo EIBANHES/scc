@@ -1,0 +1,18 @@
+#cadastrar-condominio {
+    margin-bottom: 80px;
+}
+
+#cadastrar-condominio .dados-gerais .titulo-dados {
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+    border-bottom: 1px dotted var(--grey);
+}
+
+#cadastrar-condominio .dados-gerais .titulo-dados svg {
+    color: var(--blue);
+}
+
+#cadastrar-condominio .dados-gerais .titulo-dados h5 {
+    display: inline;
+    color: var(--blue);
+}

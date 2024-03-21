@@ -1,0 +1,94 @@
+{% if current_user.is_authenticated %}
+{% extends 'base_page.html' %}
+{% block conteudo %}
+<section id="visualizacao-produto" class="pt-5">
+  <div class="container">
+    <div class="breadcrumb-pagina">
+      {% set breadcrumb_items=['Home', 'Almoxarifado', 'Produtos', 'Visualizar produto'] %}
+      {% include 'breadcrumb.html'%}
+    </div>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+      {{ message }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    <div class="card-info">
+      <div class="visualizar-info">
+        <form action="">
+          <div class="row">
+            <div class="col-12 col-sm-12 col-md-12 col-xl-3 col-lg-3">
+              <div class="item-form">
+                <label for="produtoNome" class="form-label">Nome do produto </label>
+                <input class="form-control form-control-sm" type="text" id="produtoNome" name="produto-nome"
+                  value="{{ produto.nome }}" disabled>
+              </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-xl-3 col-lg-3">
+              <div class="item-form">
+                <label for="produtoCodigo" class="form-label">Código </label>
+                <input class="form-control form-control-sm" type="text" id="produtoCodigo" name="produto-codigo"
+                  value="{{ produto.codigo_produto }}" disabled>
+              </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-xl-3 col-lg-3">
+              <div class="item-form">
+                <label for="produtoCodigoBarras" class="form-label">Código de barras </label>
+                <input class="form-control form-control-sm" type="text" id="produtoCodigoBarras"
+                  name="produto-codigo-barras" value="{{ produto.codigo_barras }}" disabled>
+              </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-xl-3 col-lg-3">
+              <div class="item-form">
+                <label for="produtoCategoria" class="form-label">Categoria </label>
+                <select class="form-select form-select-sm" aria-label="Default select example" name="produto-categoria"
+                  disabled>
+                  {% if categoria_produto.ativo == 1 %}
+                  <option selected>{{ categoria_produto.tipo }}</option>
+                  {% else %}
+                  <option selected></option>
+                  {% endif %}
+                </select>
+              </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-xl-3 col-lg-3">
+              <div class="item-form">
+                <label for="produtoValor" class="form-label">Valor </label>
+                <input class="form-control form-control-sm" type="text" id="produtoValor" name="produto-valor"
+                  value="{{ formatacao_valor_numerico(produto.valor) }}" disabled>
+              </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-xl-3 col-lg-3 item-form">
+              <div class="item-form">
+                <label for="produtoEstoque" class="form-label">Quantidade no estoque </label>
+                <input class="form-control form-control-sm" type="text" id="produtoEstoque" name="produto-estoque"
+                  value="{{ formatacao_valor_numerico(produto.quantidade_estoque) }}" disabled>
+              </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-xl-3 col-lg-3 item-form">
+              <div class="item-form">
+                <label for="produtoValorTotal" class="form-label">Valor total estimado</label>
+                <input class="form-control form-control-sm" type="text" id="produtoValorTotal"
+                  name="produto-valor-total" value="{{ formatacao_valor_numerico(produto.valor_total) }}" disabled>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="botoes-acao mt-3">
+                <a href="javascript:history.back()" class="botao-transparente">Voltar</a>
+                <a href="{{ url_for('editarProduto', id=produto.id) }}" class="botao-default">Editar</a>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock conteudo %}
+{% else %}
+{% include 'sem_autorizacao.html' %}
+{% endif%}

@@ -1,0 +1,81 @@
+{% if current_user.is_authenticated %}
+{% extends 'base_page.html' %}
+
+{% block conteudo %}
+<section id="visualizar-usuario" class="pt-5">
+  <div class="container">
+    <div class="breadcrumb-pagina">
+      {% set breadcrumb_items=['Home', 'Configurações', 'Usuários', 'Visualizar usuário'] %}
+      {% include 'breadcrumb.html'%}
+    </div>
+    <div class="card-info">
+      <div class="visualizar-info">
+        <div class="row">
+          <div class="col-12 col-sm-12 col-md-12 col-xl-3 col-lg-3">
+            <div class="item-form">
+              <label for="nome" class="form-label">Nome: </label>
+              <input class="form-control form-control-sm" type="text" id="nome" name="nome" value="{{ usuario.nome }}"
+                disabled>
+            </div>
+          </div>
+          <div class="col-12 col-sm-12 col-md-12 col-xl-3 col-lg-3">
+            <div class="item-form">
+              <label for="email" class="form-label">Email: </label>
+              <input class="form-control form-control-sm" type="email" id="email" name="email"
+                value="{{ usuario.email }}" disabled>
+            </div>
+          </div>
+          <div class="col-12 col-sm-12 col-md-12 col-xl-3 col-lg-3">
+            <div class="item-form">
+              <label for="cpf" class="form-label">CPF: </label>
+              <input class="form-control form-control-sm" type="text" id="cpf" name="cpf"
+                value="{{ usuario.cpf }}" disabled>
+            </div>
+          </div>
+          {% if usuario.cnpj %}
+          <div class="col-12 col-sm-12 col-md-12 col-xl-3 col-lg-3">
+            <div class="item-form">
+                <label for="cpfcnpj" class="form-label">CNPJ: </label>
+                <input class="form-control form-control-sm" type="text" id="cnpj" name="cnpj"
+                value="{{ usuario.cnpj }}" disabled>
+            </div>
+          </div>
+          {% endif %}
+          {% if usuario.razao_social %}
+          <div class="col-12 col-sm-12 col-md-12 col-xl-3 col-lg-3" id="razao-social-container">
+              <div class="item-form">
+                <label for="cpfcnpj" class="form-label">Razão social: </label>
+                <input class="form-control form-control-sm" type="text" id="razao_social" name="razao_social"
+                value="{{ usuario.razao_social }}" disabled>
+              </div>
+          </div>
+          {% endif %}
+          <div class="col-12 col-sm-12 col-md-12 col-xl-3 col-lg-3">
+            <div class="item-form">
+              <label for="celular-principal" class="form-label">Número de contato: </label>
+              <input class="form-control form-control-sm" type="text" id="celular-principal" name="celular-principal"
+                value="{{ usuario.numero_contato }}" disabled>
+            </div>
+          </div>
+          <div class="col-12 col-sm-12 col-md-12 col-xl-3 col-lg-3">
+            <div class="item-form">
+              <label for="tipo-adm" class="form-label">Tipo administrador: </label>
+              <input class="form-control form-control-sm" type="text" id="tipo-adm" name="tipo-adm"
+                value="{{ usuario.tipo_administrador.tipo }}" disabled>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="botoes-acao mt-3">
+              <a href="javascript:history.back()" class="botao-transparente">Voltar</a>
+              <a href="{{ url_for('configEditarUsuario', id=usuario.id) }}" class="botao-default">Editar</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock conteudo %}
+{% else %}
+{% include 'sem_autorizacao.html' %}
+{% endif%}

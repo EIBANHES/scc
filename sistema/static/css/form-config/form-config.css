@@ -1,0 +1,43 @@
+.form-label {
+    font-size: 15px;
+    color: var(--blue);
+    font-weight: 400;
+}
+
+.form-control:focus {
+    background-color: var(--white);
+    color: initial;
+    border: 1px solid var(--blue);
+    box-shadow: initial;
+    cursor: initial;
+}
+
+.form-control:disabled, .form-select:disabled {
+    cursor: not-allowed;
+}
+
+/* Responsividade */
+
+@media (max-width: 1440px) {}
+
+@media (max-width: 1399.98px) {}
+
+@media (max-width: 1199.98px) {}
+
+@media(max-width: 1024px) {
+    .form-label {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .form-control:disabled, .form-control-sm {
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 767.98px) {}
+
+@media (max-width: 575.98px) {}
+
+@media(max-width: 425px) {}

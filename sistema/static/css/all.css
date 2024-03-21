@@ -1,0 +1,132 @@
+/* Configurações gerais */
+@import './fonts/fonts.css';
+@import './colors/colors.css';
+@import './filtro-busca/filtro-busca.css';
+@import './menu/menu.css';
+@import './form-config/form-config.css';
+@import './modal-config/modal-config.css';
+@import './table-config/table-config.css';
+@import './configuracao-accordion/accordion.css';
+@import './breadcrumb-config/breadcrumb-config.css';
+@import './botao-config/botao-config.css';
+@import './sem-autorizacao-e-nao-encontrado/sem-autorizacao.css';
+@import './sem-autorizacao-e-nao-encontrado/error.css';
+@import './css-botao-filtro/botao-filtro.css';
+
+/* Templates */
+
+/* Login e cadastro */
+@import './login/login.css';
+@import './login/cadastro.css';
+
+/* Condominios */
+@import './css-page-condominio/listagem-condominios.css';
+@import './css-page-condominio/cadastro-condominio.css';
+
+/* Morador */
+@import './css-page-morador/index.css';
+@import './css-page-morador/criar-morador.css';
+@import './css-page-morador/criar-morador-dependente.css';
+@import './css-page-morador/editar-morador.css';
+@import './css-page-morador/visualizar-morador.css';
+
+/* Proprietarios */
+
+@import './css-page-proprietario/criar-proprietario.css';
+@import './css-page-proprietario/editar-proprietario.css';
+@import './css-page-proprietario/proprietarios.css';
+@import './css-page-proprietario/visualizar-proprietario.css';
+
+/* Produtos */
+@import './css-page-produtos/listagem-produtos.css';
+
+/* Configuracoes */
+@import './css-page-configuracao/meu-perfil.css';
+@import './css-page-configuracao/editar-usuario.css';
+@import './css-page-configuracao/visualizar-usuario.css';
+@import './css-page-configuracao/controle-usuario.css';
+
+/* Paginação */
+@import './css-config-paginacao/paginacao.css';
+
+/* Sweeralert */
+@import './sweetalert/sweetalert.css';
+
+/* Almoxarifado */
+@import './pages/criar_produto.css';
+@import './pages/produtos.css';
+@import './pages/visualizar_produto.css';
+
+/* Pix gerencianet */
+@import './gerencianet/formas-pagamento.css';
+@import './gerencianet/pix.css';
+@import './gerencianet/boleto.css';
+
+/* Imóveis */
+@import './pages/imoveis.css';
+
+/* Observações */
+@import './css-page-observacao/listagem-observacoes.css';
+
+* {
+    font-family: 'Lato', sans-serif;
+}
+
+body {
+    height: 100vh;
+}
+
+#topo-configuracao {
+    padding-top: 50px;
+}
+
+#conteudo-main {
+    height: 100vh;
+    /* background-color: #faf9f8; */
+    background-image: linear-gradient(to bottom, #f4f4f4, #efefef, #f4f4f4, #fafafa, #ffffff);
+}
+
+.card-info {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 21px;
+    background-color: #ffffff;
+    border-radius: 15px;
+}
+
+.hidden {
+    display: none;
+}
+
+.divisor {
+    width: 100%;
+    height: 1px;
+    background-color: #D4D6D9;
+    margin: 20px 0px;
+}
+
+.alert {
+    margin-top: 30px;
+    font-size: 15px;
+    padding: 10px;
+}
+
+.text-bg-success,
+.text-bg-danger {
+    font-weight: 400;
+}
+
+.alert-dismissible .btn-close {
+    padding: 14px;
+}
+
+.mensagem-indisponivel span {
+    display: block;
+    background-color: #F8D7DA;
+    text-align: center;
+    color: #58151C;
+    border: 1px dotted #F1AEB5;
+    font-weight: 300;
+    border-radius: 5px;
+    padding: 6px;
+    width: 100%;
+}

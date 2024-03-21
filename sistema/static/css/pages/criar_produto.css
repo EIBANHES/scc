@@ -1,0 +1,46 @@
+.criar-produto a{
+    text-decoration: none;
+}
+
+#criar-produto, #editar-produto, #visualizacao-produto {
+  margin-bottom: 80px;
+}
+  
+/* .breadcrumb-item a {
+    font-size: 14px;
+  }
+  
+  .breadcrumb-item.active {
+    font-size: 15px;
+  }
+  
+  /* Media queries para diminuir o tamanho da fonte */
+  /* @media screen and (max-width: 768px) {
+    .breadcrumb-item a {
+      font-size: 12px;
+
+
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .breadcrumb-item.active {
+      font-size: 13px;
+ 
+    }
+  }
+  
+  @media screen and (max-width: 576px) {
+    .breadcrumb-item a{
+      font-size: 10px;
+ 
+
+    }
+  }
+
+  @media screen and (max-width: 576px) {
+    .breadcrumb-item.active {
+      font-size: 11px;
+
+    }
+  } */

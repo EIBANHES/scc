@@ -1,0 +1,34 @@
+.pagination .page-item .page-link {
+    color: var(--blue);
+    padding: 3px 10px;
+}
+
+.pagination {
+    --bs-pagination-active-bg: none !important;
+    --bs-pagination-active-border-color: none !important;
+    margin-bottom: 0;
+}
+
+.pagination .page-item .page-link {
+    color: var(--blue);
+    padding: 3px 10px;
+}
+
+.pagination .page-item.active {
+    background-color: var(--bs-pagination-hover-bg);
+    border-color: var(--bs-pagination-hover-border-color);
+}
+
+.active>.page-link {
+    border-color: #dee2e6;
+}
+
+.paginacao-tabela {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.paginacao-tabela i {
+    font-size: 15px;
+}

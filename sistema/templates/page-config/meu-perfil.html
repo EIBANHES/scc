@@ -1,0 +1,94 @@
+{% if current_user.is_authenticated %}
+{% extends 'base_page.html' %}
+{% block conteudo %}
+<section id="meu-perfil" class="pt-5">
+  <div class="container">
+    <div class="breadcrumb-pagina">
+      {% set breadcrumb_items=['Home', 'Configurações', 'Meu perfil'] %}
+      {% include 'breadcrumb.html'%}
+    </div>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+      {{ message }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    <div class="card-info">
+      <div class="informacoes-perfil">
+        <form action="" method="post">
+          <div class="row">
+            <div class="col-12 col-sm-12 col-md-12 col-xl-3 col-lg-3">
+              <div class="item-form">
+                <label for="nome" class="form-label">Nome: </label>
+                <input class="form-control form-control-sm" type="text" id="nome" name="nome"
+                  value="{{current_user.nome}}">
+              </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-xl-3 col-lg-3">
+              <div class="item-form">
+                <label for="email" class="form-label">Email: </label>
+                <input class="form-control form-control-sm" type="email" id="email" name="email"
+                  value="{{current_user.email}}">
+              </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-xl-3 col-lg-3">
+              <div class="item-form">
+                <label for="cpf" class="form-label">CPF: </label>
+                <input class="form-control form-control-sm" type="text" id="cpf" name="cpf"
+                  value="{{current_user.cpf}}">
+              </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-xl-3 col-lg-3">
+              <div class="item-form">
+                  <label for="cpfcnpj" class="form-label">CNPJ: </label>
+                  <input class="form-control form-control-sm" type="text" id="cnpj" name="cnpj"
+                  value="{{ current_user.cnpj }}">
+              </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-xl-3 col-lg-3" id="razao-social-container">
+                <div class="item-form">
+                  <label for="cpfcnpj" class="form-label">Razão social: </label>
+                  <input class="form-control form-control-sm" type="text" id="razao_social" name="razao_social"
+                  value="{{ current_user.razao_social }}">
+              </div>
+            </div>
+            <div class=" col-12 col-sm-12 col-md-12 col-xl-3 col-lg-3">
+              <div class="item-form">
+                <label for="celular-principal" class="form-label">Número de contato: </label>
+                <input class="form-control form-control-sm" type="text" id="celular-principal" name="celular-principal"
+                  value="{{current_user.numero_contato}}">
+              </div>
+            </div>
+            <div class=" col-12 col-sm-12 col-md-12 col-xl-3 col-lg-3">
+              <div class="item-form">
+                <label for="tipo-adm" class="form-label">Tipo administrador: </label>
+                <br>
+                <select class="form-select form-select-sm" aria-label="Default select example" name="tipo-adm">
+                  <option selected value="{{current_user.tipo_administrador_id}}">
+                    {{current_user.tipo_administrador.tipo}}</option>
+                  {% for tipo in tipo_adm %}
+                  <option value="{{tipo.id}}">{{tipo.tipo}}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="botoes-acao mt-3">
+                <a href="javascript:history.back()" class="botao-transparente">Voltar</a>
+                <button type="submit" class="botao-default">Editar</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock conteudo %}
+{% else %}
+{% include 'sem_autorizacao.html' %}
+{% endif%}

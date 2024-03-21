@@ -1,0 +1,165 @@
+{% if current_user.is_authenticated %}
+{% extends 'base_page.html' %}
+
+{% block conteudo %}
+<section id="topo-configuracao">
+  <div class="container">
+    <div class="filtro-busca-item">
+      <div class="row">
+        <div class="breadcrumb-pagina">
+          {% set breadcrumb_items=['Condominios', 'Cadastrar condomínio'] %}
+          {% include 'breadcrumb.html'%}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="cadastrar-condominio">
+  <div class="container">
+    <div class="row">
+      <div class="card-info mt-4 mt-sm-5 mt-lg-5">
+        <form method="post" class="pt-3 needs-validation" novalidate>
+          <div class="dados-gerais">
+            <div class="titulo-dados">
+              <span><i class="fa-regular fa-building"></i>
+                <h5>Dados gerais</h5>
+              </span>
+            </div>
+            <div class="row">
+              <div class="col-12 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                <div class="item-form">
+                  <label for="cnpj" class="form-label">CNPJ:*</label>
+                  <input class="form-control form-control-sm" type="text" id="cnpj" name="cnpj"
+                    placeholder="__.___.___/____-__" required>
+                </div>
+              </div>
+              <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                <div class="item-form">
+                  <label for="razao-social" class="form-label">Razão social:*</label>
+                  <input class="form-control form-control-sm" type="text" id="razao-social" name="razao-social"
+                    required>
+                </div>
+              </div>
+              <div class="col-12 col-sm-5 col-md-5 col-lg-5 col-xl-5">
+                <div class="item-form">
+                  <label for="nome-fantasia" class="form-label">Nome Fantasia:*</label>
+                  <input class="form-control form-control-sm" type="text" id="nome-fantasia" name="nome-fantasia"
+                    required>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                  <div class="item-form">
+                    <label for="inscricao-estadual" class="form-label">Inscrição estadual:*</label>
+                    <input class="form-control form-control-sm" type="text" id="inscricao-estadual"
+                      name="inscricao-estadual" required>
+                  </div>
+                </div>
+                <div class="col-12 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                  <div class="item-form">
+                    <label for="inscricao-municipal" class="form-label">Inscrição municipal:*</label>
+                    <input class="form-control form-control-sm" type="text" id="inscricao-municipal"
+                      name="inscricao-municipal" required>
+                  </div>
+                </div>
+                <div class="col-12 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                  <div class="item-form">
+                    <label for="contato" class="form-label">Contato:*</label>
+                    <input class="form-control form-control-sm" type="text" id="contato" name="contato"
+                      placeholder="(   ) ____-___" required>
+                  </div>
+                </div>
+                <div class="col-12 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                  <div class="item-form">
+                    <label for="email-principal" class="form-label">Email principal:*</label>
+                    <input class="form-control form-control-sm" type="email" id="email-principal" name="email-principal"
+                      required>
+                  </div>
+                </div>
+                <div class="col-12 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                  <div class="item-form">
+                    <label for="finalidade" class="form-label">Finalidade:*</label>
+                    <select class="form-select-sm form-control" id="finalidade" name="finalidade" required>
+                      <option value="" selected>Selecione a finalidade</option>
+                      <option value="1">Opção 1</option>
+                      <option value="2">Opção 2</option>
+                      <option value="3">Opção 3</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mt-4 mt-sm-5 mt-lg-5">
+            <div class="dados-gerais endereco">
+              <div class="titulo-dados">
+                <span><i class="fa-regular fa-location-dot"></i>
+                  <h5>Endereço de cobrança</h5>
+                </span>
+              </div>
+              <div class="row">
+                <div class="col-12 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                  <div class="item-form">
+                    <label for="cep" class="form-label">CEP:*</label>
+                    <input class="form-control form-control-sm" type="text" id="cep" name="cep" placeholder="_____-___"
+                      required>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                    <div class="item-form">
+                      <label for="logradouro" class="form-label">Logradouro:*</label>
+                      <input class="form-control form-control-sm" type="text" id="logradouro" name="logradouro"
+                        required>
+                    </div>
+                  </div>
+                  <div class="col-12 col-sm-2 col-md-2 col-lg-2 col-xl-2">
+                    <div class="item-form">
+                      <label for="numero" class="form-label">Número:*</label>
+                      <input class="form-control form-control-sm" type="text" id="numero" name="numero" required>
+                    </div>
+                  </div>
+                  <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                    <div class="item-form">
+                      <label for="complemento" class="form-label">Complemento:*</label>
+                      <input class="form-control form-control-sm" type="text" id="complemento" name="complemento"
+                        required>
+                    </div>
+                  </div>
+                  <div class="col-12 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                    <div class="item-form">
+                      <label for="uf" class="form-label">UF:*</label>
+                      <input class="form-control form-control-sm" type="text" id="uf" name="uf" required>
+                    </div>
+                  </div>
+                  <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                    <div class="item-form">
+                      <label for="cidade" class="form-label">Cidade:*</label>
+                      <input class="form-control form-control-sm" type="text" id="cidade" name="cidade" required>
+                    </div>
+                  </div>
+                  <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                    <div class="item-form">
+                      <label for="bairro" class="form-label">Bairro:*</label>
+                      <input class="form-control form-control-sm" type="text" id="bairro" name="bairro" required>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="botoes-acao mt-3">
+              <a href="javascript:history.back()" class="botao-transparente">Voltar</a>
+              <button class="botao-default" type="submit">Cadastrar</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock conteudo %}
+{% else %}
+{% include 'sem_autorizacao.html' %}
+{% endif%}

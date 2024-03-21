@@ -1,0 +1,20 @@
+:root {
+    --blue: #455B6C;
+    --white: #FFFFFF;
+    --darkBlue: #004B80;
+    --lightGrey: #F6F6F6;
+    --grey: #D4D6D9;
+    --greyOpacity: rgba(246, 246, 246, 0.5);
+    --red: #E63946;
+    --redDark: #B91C1C; 
+    --redLight: #FCA5A5;
+    --redDark: #B91C1C;
+}
+
+/* 
+#455B6C -- azul fosco
+#3B6D94
+#5AA6E0
+#2B4F6B
+#1B3142
+*/

@@ -1,0 +1,112 @@
+#forma-pagamento .container-pagamento {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#forma-pagamento .area-tabs .nav-tabs {
+    align-items: center;
+    justify-content: center;
+    width: 75%;
+    margin: 0 auto;
+}
+
+#forma-pagamento .area-tabs .nav-tabs .nav-item a {
+    color: var(--blue);
+    font-weight: 500;
+}
+
+#forma-pagamento .area-tabs .nav-tabs .nav-item img {
+    width: 30px;
+}
+
+/* Area tabs (Pix) */
+
+#forma-pagamento .area-tabs .box-pagamento {
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 75%;
+    margin: 0 auto;
+}
+
+#forma-pagamento .area-tabs .box-pagamento .imagem-principal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#forma-pagamento .area-tabs .box-pagamento .imagem-principal img {
+    width: 200px;
+    object-fit: cover;
+    margin-bottom: 20px;
+}
+
+#forma-pagamento .area-tabs .box-pagamento .descricao p {
+    color: var(--blue);
+    font-weight: 500;
+    font-size: 14px;
+    text-align: center;
+}
+
+#forma-pagamento .area-tabs .box-pagamento .info-pagamento {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#forma-pagamento .area-tabs .box-pagamento .info-pagamento .valor {
+    margin-right: 20px;
+}
+
+#forma-pagamento .area-tabs .box-pagamento .info-pagamento .valor p {
+    margin-bottom: 0px;
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--darkBlue);
+}
+
+#forma-pagamento .area-tabs .box-pagamento .info-pagamento .valor span {
+    font-weight: bold;
+    color: var(--darkBlue);
+    font-size: 18px;
+}
+
+#forma-pagamento .area-tabs .box-pagamento .form-cartao {
+    margin: auto;
+    width: 60%;
+}
+
+@media (max-width: 1440px) {}
+
+@media (max-width: 1399.98px) {}
+
+@media (max-width: 1199.98px) {
+
+    #forma-pagamento .area-tabs .box-pagamento,
+    #forma-pagamento .area-tabs .nav-tabs {
+        width: 100%;
+    }
+
+    #forma-pagamento .area-tabs .box-pagamento .imagem-principal img {
+        width: 170px;
+    }
+
+    #forma-pagamento .botao-transparente {
+        font-size: 13px;
+    }
+}
+
+@media(max-width: 1024px) {}
+
+@media (max-width: 991.98px) {
+    #forma-pagamento .area-tabs .nav-tabs .nav-item a {
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 767.98px) {}
+
+@media (max-width: 575.98px) {}
+
+@media(max-width: 425px) {}

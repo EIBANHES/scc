@@ -1,0 +1,87 @@
+.botao-default {
+    text-decoration: none;
+    background-color: var(--blue);
+    color: var(--grey);
+    border: 1px solid var(--grey);
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin-right: 5px;
+    transition: all .5s;
+    font-size: 14px;
+}
+
+.botao-transparente {
+    text-decoration: none;
+    background-color: var(--white);
+    color: var(--blue);
+    border: 1px solid var(--grey);
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin-right: 5px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.botao-transparente-success {
+    text-decoration: none;
+    background-color: var(--white);
+    color: #2c863e;
+    border: 1px solid var(--grey);
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin-right: 5px;
+    font-size: 14px;
+}
+
+.botao-pdf {
+    text-decoration: none;
+    background-color: var(--red);
+    color: var(--grey);
+    border: 1px solid var(--grey);
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin-right: 5px;
+    transition: all .5s;
+    font-size: 14px;
+}
+
+.botao-pdf:hover {
+    background-color: var(--redDark); 
+    border-color: var(--redLight); 
+    color: var(--white); 
+  }
+
+.botao-default:hover {
+    color: var(--grey);
+}
+
+.botao-transparente:hover {
+    color: var(--blue);
+    font-weight: 500;
+    transition: all .5s;
+}
+
+.botao-default:hover {
+    background-color: var(--darkBlue);
+    transition: all .5s;
+}
+
+@media (max-width: 1440px) {}
+
+@media (max-width: 1399.98px) {}
+
+@media (max-width: 1199.98px) {}
+
+@media(max-width: 1024px) {
+    .botao-default {
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 991.98px) {}
+
+@media (max-width: 767.98px) {}
+
+@media (max-width: 575.98px) {}
+
+@media(max-width: 375px) {}

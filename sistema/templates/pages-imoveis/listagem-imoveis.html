@@ -1,0 +1,302 @@
+{% if current_user.is_authenticated %}
+{% extends 'base_page.html' %}
+{% block conteudo %}
+
+<section id="topo-configuracao">
+  <div class="container">
+    <div class="filtro-busca-item">
+      <div class="row">
+        {% set rota='cadastrarImovel' %}
+        {% set nome_botao='Adicionar novo imóvel' %}
+        {% set placeholder='Buscar imóvel...' %}
+        {% include 'componente-filtro-cadastro.html'%}
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="filtro-pesquisa">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="botao-filtragem">
+          <button class="botao-default" data-bs-toggle="modal" data-bs-target="#filtroModal"><i
+              class="fa-solid fa-filter"></i> Filtro</button>
+          <div class="modal fade" id="filtroModal" tabindex="-1" aria-labelledby="filtroModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="filtroModalLabel">Filtro de busca</h5>
+                </div>
+                <div class="modal-body">
+                  <!-- Conteúdo do filtro (campos com selects) -->
+                  <form action="/imoveis" method="get">
+                    <div class="form-group mb-3">
+                      <label for="andar" class="form-label"><strong>Andar</strong></label>
+                      <select name="andar" class="form-control form-control-sm" id="andar">
+                        {% for andar in andares %}
+                        <option value="{{ andar.id }}">{{ andar.nome }}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                    <div class="form-group mb-3">
+                      <label for="apartamento" class="form-label"><strong>Apartamento</strong></label>
+                      <input class="form-control form-control-sm" type="text" id="apartamento" name="apartamento">
+                    </div>
+                    <div class="modal-footer">
+                      <button type="submit" class="botao-default">Filtrar</button>
+                      <button type="button" class="botao-transparente" data-bs-dismiss="modal">Fechar</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section id="area-imoveis">
+  <div class="dados-tabela">
+    <div class="container">
+      <div class="row">
+        {% if imoveis %}
+        <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-lg-6">
+          <div class="botao-exportar-pdf mt-3">
+            <a href="{{ url_for('exportar_pdf_rota', entity_name='imoveis') }}" class="botao-pdf"><i
+                class="fa-solid fa-file-pdf"></i> Exportar para PDF</a>
+          </div>
+        </div>
+        <div class="col-12 pt-5">
+          <div class="tabela-info">
+            <div class="table-responsive">
+              <table class="table table-sm">
+                <thead>
+                  <tr>
+                    <th scope="col"><a
+                        href="{{ url_for('imoveis', order_by='andar', order_direction=next_order_direction) }}">Andar</a>
+                      {% if order_by == None %}
+                      <i class="fa fa-sort"></i>
+                      {% endif %}
+
+                      {% if order_by == 'andar' %}
+                      <i class="fa fa-sort-{{ 'up' if order_direction == 'asc' else 'down' }}"></i>
+                      {% endif %}
+                    </th>
+
+                    <th scope="col"><a
+                        href="{{ url_for('imoveis', order_by='apartamento', order_direction=next_order_direction) }}">Apartamento</a>
+                      {% if order_by == None %}
+                      <i class="fa fa-sort"></i>
+                      {% endif %}
+
+                      {% if order_by == 'apartamento' %}
+                      <i class="fa fa-sort-{{ 'up' if order_direction == 'asc' else 'down' }}"></i>
+                      {% endif %}
+                    </th>
+                    <th scope="col"><a
+                        href="{{ url_for('imoveis', order_by='proprietario', order_direction=next_order_direction) }}">Proprietário</a>
+                      {% if order_by == None %}
+                      <i class="fa fa-sort"></i>
+                      {% endif %}
+
+                      {% if order_by == 'proprietario' %}
+                      <i class="fa fa-sort-{{ 'up' if order_direction == 'asc' else 'down' }}"></i>
+                      {% endif %}
+                    </th>
+                    <th scope="col"><a
+                        href="{{ url_for('imoveis', order_by='data_criacao', order_direction=next_order_direction) }}">Cadastro
+                        em</a>
+                      {% if order_by == None %}
+                      <i class="fa fa-sort"></i>
+                      {% endif %}
+
+                      {% if order_by == 'data_criacao' %}
+                      <i class="fa fa-sort-{{ 'up' if order_direction == 'asc' else 'down' }}"></i>
+                      {% endif %}
+                    </th>
+                    <th scope="col" class="actions">Ações</th>
+                  </tr>
+                </thead>
+                {% for imovel in imoveis %}
+                {% if imovel.ativo == 1 %}
+                <tbody>
+                  <tr>
+                    <td>{{ imovel.andar.nome }}</td>
+                    <td>{{ imovel.apartamento }}</td>
+                    <td>
+                      {% for proprietario in proprietarios %}
+                      {% if proprietario.id == imovel.pessoa_id %}
+                      {{ proprietario.nome }}
+                      {% endif %}
+                      {% endfor %}
+                    </td>
+                    <td>{{ formatar_data_brasil(imovel.data_criacao) }}</td>
+                    <td class="acao">
+                      <a href="{{url_for('visualizarImovel', id=imovel.id)}}" class="link botao-acao-tabela"
+                        title="Visualizar">
+                        <i class="fa-regular fa-eye"></i>
+                      </a>
+                      <a href="{{url_for('editarImovel', id=imovel.id)}}" class="link botao-acao-tabela" title="Editar">
+                        <i class="fa-regular fa-pen"></i>
+                      </a>
+                      <!-- Button trigger modal -->
+                      <button type="button" class="link botao-acao-tabela" data-bs-toggle="modal"
+                        data-bs-target="#modalExclusao{{imovel.id}}">
+                        <i class="fa-regular fa-xmark"></i>
+                      </button>
+
+                      <!-- Modal Remoção -->
+                      <div class="modal fade" id="modalExclusao{{imovel.id}}" tabindex="-1" role="dialog"
+                        aria-labelledby="modalExclusaoLabel{{imovel.id}}" aria-hidden="true">
+                        <div class="modal-dialog">
+                          <div class="modal-content topo">
+                            <div class="modal-header">
+                              <i class="fa-thin fa-square-xmark"></i>
+                            </div>
+                            <div class="modal-body">
+                              <label class="custom-label-modal-body" for="removerProduto">Deseja remover o apartamento
+                                '{{ imovel.apartamento }}' ?</label>
+                            </div>
+                            <div class="modal-footer">
+                              <form action="{{ url_for('excluirImovel', id=imovel.id) }}" method="POST">
+                                <button type="submit" class="botao-default">Sim</button>
+                              </form>
+                              <button type="button" class="botao-transparente" data-bs-dismiss="modal">Não</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+                {% endif %}
+                {% endfor %}
+              </table>
+            </div>
+          </div>
+          {% set endpoint = 'imoveis' %}
+          {% include 'pagination.html'%}
+        </div>
+        {% else %}
+        <div class="mensagem-indisponivel mt-3">
+          <div class="container">
+            <div class="row">
+              <div class="col-12">
+                <span> Não há imóveis para serem exibidos.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <div class="dados-tabela-mobile mt-4">
+    <div class="container">
+      <div class="row">
+        {% if imoveis %}
+        <div class="col-12">
+          <div class="tabela-info">
+            <div class="accordion accordion-flush" id="accordionFlushExample">
+              {% for imovel in imoveis %}
+              {% if imovel.ativo == 1 %}
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseOne{{ imovel.id }}" aria-expanded="false"
+                    aria-controls="flush-collapseOne{{ imovel.id }}">
+                    {{ imovel.andar.nome }}, AP: {{ imovel.apartamento }}
+                  </button>
+                </h2>
+                <div id="flush-collapseOne{{ imovel.id }}" class="accordion-collapse collapse"
+                  data-bs-parent="#accordionFlushExample">
+                  <div class="accordion-body">
+                    <table class="table table-sm">
+                      <thead>
+                        <tr>
+                          <th scope="col">Proprietário</th>
+                          <th scope="col" class="actions">Ações</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>
+                            {% for proprietario in proprietarios %}
+                            {% if proprietario.id == imovel.pessoa_id %}
+                            {{ proprietario.nome }}
+                            {% endif %}
+                            {% endfor %}</td>
+                          <td class="acao">
+                            <a href="{{url_for('visualizarImovel', id=imovel.id)}}" class="link link-visualizacao"
+                              title="Visualizar">
+                              <i class="fa-regular fa-eye"></i>
+                            </a>
+                            <a href="{{url_for('editarImovel', id=imovel.id)}}" class="link link-edicao" title="Editar">
+                              <i class="fa-regular fa-pen"></i>
+                            </a>
+                            <!-- Button trigger modal -->
+                            <button type="button" class="botao botao-exclusao" data-bs-toggle="modal"
+                              data-bs-target="#modalExclusaoMobile{{imovel.id}}">
+                              <i class="fa-regular fa-xmark"></i>
+                            </button>
+
+                            <!-- Modal Remoção -->
+                            <div class="modal fade" id="modalExclusaoMobile{{imovel.id}}" tabindex="-1" role="dialog"
+                              aria-labelledby="modalExclusaoMobileLabel{{imovel.id}}" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <i class="fa-thin fa-square-xmark"></i>
+                                  </div>
+                                  <div class="modal-body">
+                                    <label class="custom-label-modal-body" for="removerProduto">Deseja remover o
+                                      apartamento
+                                      '{{ imovel.apartamento }}' ?</label>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <form action="{{ url_for('excluirImovel', id=imovel.id) }}" method="POST">
+                                      <button type="submit" class="botao-default">Sim</button>
+                                    </form>
+                                    <button type="button" class="botao-transparente"
+                                      data-bs-dismiss="modal">Não</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              {% endif %}
+              {% endfor %}
+            </div>
+          </div>
+          {% set endpoint = 'imoveis' %}
+          {% include 'pagination.html'%}
+        </div>
+        {% else %}
+        <div class="mensagem-indisponivel mt-3">
+          <div class="container">
+            <div class="row">
+              <div class="col-12">
+                <span> Não há imóveis para serem exibidos.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  {% endblock conteudo %}
+  {% else %}
+  {% include 'sem_autorizacao.html' %}
+  {% endif%}

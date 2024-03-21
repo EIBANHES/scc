@@ -1,0 +1,41 @@
+
+#area-imoveis {
+  margin-bottom: 80px;
+}
+
+.title-page h1 {
+  font-size: 20px;
+  margin-top: 5rem;
+}
+
+#area-imoveis .filtro-item .cadastrar-imovel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#area-imoveis a {
+  text-decoration: none;
+}
+
+#area-imoveis .filtro-item .cadastrar-imoveis a:hover {
+  background-color: var(--darkBlue);
+  transition: all .5s;
+}
+
+
+/* Responsividade */
+
+@media (max-width: 1440px) {}
+
+@media (max-width: 1399.98px) {}
+
+@media (max-width: 1199.98px) {}
+
+@media(max-width: 1024px) {}
+
+@media (max-width: 991.98px) {}
+
+@media (max-width: 767.98px) {}
+
+@media (max-width: 575.98px) {}

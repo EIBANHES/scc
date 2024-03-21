@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>SCC - Sistema de Controle de Condomínio</title>
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='plugins/bootstrap/css/bootstrap.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/all.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='plugins/fontawesome-5.15.3/css/all.min.css') }}">
+
+</head>
+
+
+<body>
+
+  {% block conteudo %}
+
+
+
+
+  {% endblock conteudo %}
+</body>
+<script src="{{url_for('static', filename='plugins/bootstrap/js/bootstrap.bundle.js')}}"></script>
+<script src="{{url_for('static', filename='plugins/jquery/jquery.min.js')}}"></script>
+<script src="{{ url_for('static', filename='plugins/fontawesome-5.15.3/js/all.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/index.js') }}"></script>
+<script src="{{ url_for('static', filename='js/base.js') }}"></script>
+<script src="{{url_for('static', filename='plugins/mask/jquery.mask.min.js')}}"></script>
+<script src="{{url_for('static', filename='js/cadastro-login.js')}}"></script>
+</html>

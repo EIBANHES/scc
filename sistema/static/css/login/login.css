@@ -1,0 +1,65 @@
+#login-page {
+    display: flex;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+}
+
+#login-page .alert {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 400px;
+}
+
+#login-page .area-login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 500px;
+    flex-direction: column;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 21px;
+    margin: 0 auto;
+}
+
+#login-page .area-login .area-login__imagem img {
+    width: 180px;
+    margin-bottom: 21px;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+#login-page .area-login .area-login__form form {
+    width: 400px;
+}
+
+#login-page .area-login__recuperar-senha {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+#login-page .area-login__recuperar-senha a {
+    text-decoration: none;
+    color: var(--blue);
+    font-size: 14px;
+    transition: all .5s;
+}
+
+#login-page .area-login__recuperar-senha a:hover {
+    color: var(--darkBlue);
+    transition: all .5s;
+}
+
+#login-page .area-login .area-login__acoes {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#login-page .area-login .area-login__acoes .botao-default,
+#login-page .area-login .area-login__acoes .botao-transparente {
+    width: 200px;
+}

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block conteudo %}
+<section id="sem-autorizacao">
+    <div class="autorizacao-container">
+        <div class="imagem">
+            <img src="/static/imagens/warnning.jpg" alt="Atenção">
+        </div>
+        <div class="mensagem">
+            <h6>Você não está autenticado para acessar essa parte do sistema. Efetue seu login e tente novamente</h6>
+            <a href="{{ url_for('index') }}" class="botao-default">Clique aqui para efetuar login</a>
+        </div>
+    </div>
+</section>
+{% endblock conteudo %}

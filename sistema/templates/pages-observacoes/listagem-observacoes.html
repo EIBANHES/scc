@@ -1,0 +1,105 @@
+{% if current_user.is_authenticated %}
+{% extends 'base_page.html' %}
+{% block conteudo %}
+
+<section id="topo-configuracao">
+  <div class="container">
+    <div class="filtro-busca-item">
+      <div class="row">
+        {% set rota='criarObservacao' %}
+        {% set nome_botao='Adicionar nova observação' %}
+        {% set placeholder='Buscar observação...' %}
+        {% include 'componente-filtro-cadastro.html'%}
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section id="listar-observacoes" class="pt-5">
+  <div class="dados-observacoes">
+    <div class="container">
+      <div class="row">
+        {% if observacoes %}
+        <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-lg-6">
+          <div class="botao-exportar-pdf pt-5">
+            <a href="{{ url_for('exportar_pdf_rota', entity_name='observacoes') }}" class="botao-pdf"><i
+                class="fa-solid fa-file-pdf"></i> Exportar para PDF</a>
+          </div>
+        </div>
+        {% for observacao in observacoes %}
+        <div class="col-12 pt-5">
+          <div class="observacao-container mt-2">
+            <div class="observacao-conteudo">
+              <a href="{{ url_for('editarObservacao', id=observacao.id) }}">
+                <p>Observação:</p>
+                <div class="divisor"></div>
+                <div class="descricao">
+                  <span>{{ observacao.descricao }}</span>
+                </div>
+                <div class="timestamp">
+                  <p>{{ formatar_data_brasil(observacao.data_criacao) }}</p>
+                  {% if observacao.imovel_id %}
+                  {% if observacao.imoveis.ativo == 1 %}
+                  <p>(Andar: {{ observacao.imoveis.andar_id }}, Apartamento: {{ observacao.imoveis.apartamento }})</p>
+                  {% endif %}
+                  {% else %}
+                  <p>(Sem imóvel vinculado)</p>
+                  {% endif %}
+                </div>
+              </a>
+              <div class="divisor"></div>
+              <div class="acoes">
+                <button type="button" class="botao botao-exclusao" data-bs-toggle="modal"
+                  data-bs-target="#modalExclusao{{ observacao.id }}">
+                  <i class="fa-sharp fa-regular fa-check"></i>
+                </button>
+                <div class="modal fade" id="modalExclusao{{ observacao.id }}" tabindex="-1" role="dialog"
+                  aria-labelledby="modalExclusaoLabel{{ observacao.id }}" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content topo">
+                      <div class="modal-header">
+                        <i class="fa-thin fa-square-check"></i>
+                      </div>
+                      <div class="modal-body">
+                        <label class="custom-label-modal-body" for="removerObservacao">
+                          Deseja marcar como concluida essa observação?
+                        </label>
+                      </div>
+                      <div class="modal-footer">
+                        <form action="{{ url_for('excluirObservacao', id=observacao.id) }}" method="POST">
+                          <button type="submit" class="botao-default">Sim</button>
+                        </form>
+                        <button type="button" class="botao-transparente" data-bs-dismiss="modal">Não</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+        {% set endpoint = 'observacoes' %}
+        {% include 'pagination.html' %}
+        {% else %}
+        <div class="mensagem-indisponivel mt-3">
+          <div class="container">
+            <div class="row">
+              <div class="col-12">
+                <span> Não há observações para serem exibidas.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+
+</section>
+{% endblock conteudo %}
+{% else %}
+{% include 'sem_autorizacao.html' %}
+{% endif %}

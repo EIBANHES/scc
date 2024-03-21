@@ -1,0 +1,137 @@
+{% if current_user.is_authenticated %}
+{% extends 'base_page.html' %}
+
+{% block conteudo %}
+<section id="boleto" class="pt-5">
+  <div class="container">
+    <div class="breadcrumb-pagina">
+      {% set breadcrumb_items=['Home', 'Formas de Pagamento', 'Boleto'] %}
+      {% include 'breadcrumb.html'%}
+    </div>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+      {{ message }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    <div class="container-boleto mt-4 mt-sm-5 mt-lg-5">
+            <section id="pagamento-boleto">
+              <div class="billet-upper">
+                  <div class="imagem-check">
+                    <img class="" src="/static/imagens/icone-check.png" width="45" height="45" alt="Icone check">
+                  </div>
+                  <div class="billet-success">
+                    <h3 class="font-5 font-bold justify-content-center">Boleto gerado!</h3>
+                  </div>
+                  <div class="botoes-boleto">
+                    <button class="botao-transparente" title="Clique aqui para imprimir o boleto" id="imprimirButton">
+                      <i class="fa-sharp fa-light fa-print"></i> Imprimir boleto
+                    </button>
+                    <button class="botao-transparente" title="Clique aqui para copiar o código de barras" id="copiarButton" data-barcode="{{ barcode }}">
+                      <i class="fa-sharp fa-light fa-barcode"></i> Copiar código de barras
+                    </button>
+                    <button class="botao-transparente-success" title="Clique aqui para copiar o código de barras" id="copiadoButton" style="display: none;">
+                      <img class="" src="/static/imagens/icone-check.png" width="10" height="10" alt="Icone check"> Código de barras copiado!
+                    </button> 
+                    <button class="botao-transparente" title="Clique aqui para visualizar o boleto" id="visualizarButton"><i class="fa-sharp fa-light fa-magnifying-glass-plus"></i> Visualizar boleto</button>
+                  </div>
+              
+                <div class="billet-info-container" id="billetInfoContainer" style="display: none;">
+                    <div class="container pt-5">
+                      <div class="row">
+                        <embed src="{{ visualizar_pdf }}" width="100%" height="600px" type="application/pdf">
+                        </div>
+                    </div>
+                </div>
+            </div>
+              <div class="divisor"></div>
+              <div class="billet-down">
+                <div class="title-charge mb-4">
+                  <h5>Resumo do pedido:</h5>
+                </div>
+                <div class="box-informacao">
+                  <div class="informacoes-pessoais">
+                    {% if data.cliente_cnpj %}
+                    <div class="info-data">
+                      <p class="descricao"><strong> {{ data.cliente_nome_pj }}</strong></p>
+                    </div>
+                    <div class="info-data">
+                      <p class="descricao"><strong> {{ formatar_cnpj(data.cliente_cnpj) }}</strong></p>
+                    </div>
+                    {% else %}
+                    <div class="info-data">
+                      <p class="descricao"><strong> {{ data.cliente_nome }}</strong></p>
+                    </div>
+                    <div class="info-data">
+                      <p class="descricao"><strong> {{ formatar_cpf(data.cliente_cpf) }}</strong></p>
+                    </div>
+                    {% endif %}
+                    <div class="info-data">
+                      <p class="descricao"><strong> {{ data.cliente_email }}</strong></p>
+                    </div>
+                  </div>
+                </div>
+                <div class="box-informacao">
+                  <div class="informacoes-cobranca">
+                    <div class="info-data">
+                      <p class="descricao">Data de vencimento:<strong> {{ formatar_apenas_data(data.data_expiracao) }}</strong></p>
+                    </div>
+                    <div class="info-data">
+                      <p class="descricao">Cobrança:<strong> {{ data.cobranca_id }}</strong></p>
+                    </div>
+                    <div class="info-data">
+                      <p class="descricao">Forma de pagamento:<strong> Boleto</strong></p>
+                    </div>
+                  </div>
+                </div>
+                <div class="box-informacao">
+                  <table class="payment-table">
+                      <tr>
+                          <th class="descricao"><strong>Item</strong></th>
+                          <th class="descricao"><strong>Preço unitário</strong></th>
+                          <th class="quantity-header"><strong>Quantidade</strong></th>
+                          <th class="descricao"><strong>Valor total</strong></th>
+                      </tr>
+                      
+                      {% for item in data['items'] %}
+                          <tr>
+                              <td class="descricao">{{ item['name'] }}</td>
+                              <td class="descricao">R$ {{ formatacao_valor_numerico((item['value'] / 100)) }}</td>
+                              <td class="quantity">{{ item['amount'] }}</td>
+                              <td class="descricao">R$ {{ formatacao_valor_numerico(((item['value'] * item['amount']) / 100)) }}</td>
+                          </tr>
+                      {% endfor %}
+                      
+                      {% for shipping in data['shippings'] %}
+                          <tr>
+                              <td class="descricao">{{ shipping.name }}</td>
+                              <td class="descricao">R$ {{ formatacao_valor_numerico((shipping.value / 100)) }}</td>
+                              <td class="quantity">1</td>
+                              <td class="descricao">R$ {{ formatacao_valor_numerico((shipping.value / 100)) }}</td>
+                          </tr>
+                      {% endfor %}
+                      <tr id="total-row">
+                        <td class="descricao" colspan="1">Total</td>
+                        <td class="descricao">-</td> 
+                        <td class="total-quantity">-</td> 
+                        <td class="descricao"><strong>R$ {{ formatacao_valor_numerico((data['valor_total'] / 100)) }}</strong></td>
+                      </tr>                   
+                  </table>
+                </div>              
+                <div class="botao-pagamento">
+                  <a href="/forma-pagamento" class="botao-default">Alterar forma de pagamento</a>
+                </div>             
+              </div>
+          </section>
+      </div>
+  </div>
+</section>
+
+{% endblock conteudo %}
+{% else %}
+{% include 'sem_autorizacao.html' %}
+{% endif%}
